@@ -1,0 +1,22 @@
+
+[34m[[33m>[34m] [32mVictim Found
+
+ [33mIP Address    [36m  : 114.31.141.186
+ [33mCountry Code  [36m  : IN
+ [33mCountry       [36m  : India
+ [33mRegion        [36m  : PB
+ [33mRegion Name   [36m  : Punjab
+ [33mCity.         [36m  : Jalandhar
+ [33mZip Code      [36m  : 144301
+ [33mTime Zone     [36m  : Asia/Kolkata
+ [33mService       [36m  : Vodafone Essar Limited-Value Added Services
+ [33mOrganisation  [36m  : Vodafone Essar Limited
+ [33mASN           [36m  : AS38266 Vodafone India Ltd.
+ [33mLatitude      [36m  : 31.33
+ [33mUser Agent    [36m  : Mozilla/5.0 (Linux; Android 7.0; Redmi Note 4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.74 Mobile Safari/537.36
+ [33mIg Mail       [36m  : Jesjh
+ [33mIP Pass       [36m  : bebssbs 
+
+[34m[[33m>[34m] [32mSaved as :[35migfreak_dumps/Jesjh.igfreak
+[34m[[33m>[34m] [37mWaiting For More victims...
+
