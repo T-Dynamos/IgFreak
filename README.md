@@ -64,20 +64,28 @@ Igfreak is a advance Instagram Slick Hacking framework that can bruteforcer , ph
 
 ### INSTALLATION [Termux] :
 * Install Dependices
- `apt-get update -y`
- `apt-get upgrade -y`
- `pkg install python -y`
- `pkg install git -y`
- `pip install lolcat`
-
+```
+  apt-get update -y 
+  apt-get upgrade -y 
+  pkg install python -y 
+  pkg install git -y 
+  pip install lolcat 
+```
 * Clone Project
-`git clone https://github.com/T-Dynamos/BaapG-Attack`
-* Change Project
-`cd $HOME`
- `ls`
-`cd BaapG-Attack`
-`ls`
-`python3 BaapG.py`
+
+```
+ git clone https://github.com/T-Dynamos/BaapG-Attack 
+ ```
+ 
+* Change Project Dir
+
+```
+ cd $HOME 
+ ls 
+ cd IgFreak
+ ls 
+ python3 igfeak.py --help
+```
 
 
 ## SCREEN SHOTS [Termux]
