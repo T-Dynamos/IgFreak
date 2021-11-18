@@ -1,6 +1,6 @@
 </p>
 <p align="center">
-<a href="https://bit.ly/2BNk3P1"><img title="Made in INDIA" src="https://img.shields.io/badge/BaapG-Attack-green.svg"></a>
+<a href="https://bit.ly/2BNk3P1"><img title="Made in INDIA" src="https://img.shields.io/badge/IgFreak-green.svg"></a>
 <a href="https://bit.ly/2BNk3P1"><img title="Version" src="https://img.shields.io/badge/Version-1.0-green.svg?style=flat-square"></a>
 <a href="https://bit.ly/2BNk3P1"><img title="Maintainence" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg"></a>
 </p>
@@ -10,7 +10,7 @@
 
 <p align="center">
 
-<img src="https://github.com/T-Dynamos/T-Dynamos/raw/main/bin/IMG_20211001_131953.jpg"/>
+<img src="https://github.com/T-Dynamos/T-Dynamos/raw/main/bin/igfreak-logo.png"/>
 
 
 
@@ -32,13 +32,15 @@
 <a href="https://github.com/T-Dynamos"><img title="Watching" src="https://img.shields.io/github/watchers/T-Dynamos/BaapG-Attack?label=Watchers&color=blue&style=flat-square"></a>
 <a href="https://github.com/T-Dynamos"><img title="Licence" src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
 </p>
-
-## ABOUT TOOL :
-
-BaapG-Attack is a python3 based script which is officially made for linux based distro . It is inbuit mass bomber with sms, mail, calls and many more bombing 
+<h1 align="center">IgFreak</h1>
 
 
-## AVAILABLE ON :
+### ABOUT TOOL :
+
+Igfreak is a advance Instagram Slick Hacking framework that can bruteforcer , phish and send 50 reports to any account 
+
+
+### AVAILABLE ON :
 
 * Termux
 * Kali Linux
@@ -51,26 +53,31 @@ BaapG-Attack is a python3 based script which is officially made for linux based 
 
 ### REQUIREMENTS :
 * Python3
+* tor
+* php
 
-## FEATURES :
+### FEATURES :
 * [+] 99.99% Works!
 * [+] Mass Bombing !
 * [+] Tbomb api !
 * [+] Easy for Beginners !
 
-## INSTALLATION [Termux] :
+### INSTALLATION [Termux] :
+* Install Dependices
+ `apt-get update -y`
+ `apt-get upgrade -y`
+ `pkg install python -y`
+ `pkg install git -y`
+ `pip install lolcat`
 
-* `apt-get update -y`
-* `apt-get upgrade -y`
-* `pkg install python -y`
-* `pkg install git -y`
-* `pip install lolcat`
-* `git clone https://github.com/T-Dynamos/BaapG-Attack`
-* `cd $HOME`
-* `ls`
-* `cd BaapG-Attack`
-* `ls`
-* `python3 BaapG.py`
+* Clone Project
+`git clone https://github.com/T-Dynamos/BaapG-Attack`
+* Change Project
+`cd $HOME`
+ `ls`
+`cd BaapG-Attack`
+`ls`
+`python3 BaapG.py`
 
 
 ## SCREEN SHOTS [Termux]
