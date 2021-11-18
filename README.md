@@ -109,8 +109,8 @@ instafollowers : Get Instagram accounts by seeking followers
 
 <br>
 <p align="center">
-<img width="50%" src="https://github.com/T-Dynamos/T-Dynamos/raw/main/biny/Screenshot_2021-10-01-13-03-59-944_com.termux.jpg"/>
-<img width="45%" src="https://github.com/T-Dynamos/T-Dynamos/raw/main/biyn/Screenshot_2021-10-01-13-19-08-100_com.termux.jpg"/>
+<img width="50%" src="https://github.com/T-Dynamos/T-Dynamos/raw/main/bin/Screenshot_2021-11-07-20-14-09-897_com.termux.jpg"/>
+<img width="45%" src="https://github.com/T-Dynamos/T-Dynamos/raw/main/bin/IMG_20211113_164508.jpg"/>
 </p>
 
 
