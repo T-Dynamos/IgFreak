@@ -58,8 +58,8 @@ Igfreak is a advance Instagram Slick Hacking framework that can bruteforcer , ph
 
 ### FEATURES :
 * [+] 99.99% Works!
-* [+] Mass Bombing !
-* [+] Tbomb api !
+* [+] tor proxy !
+* [+] Advance ip capturing !
 * [+] Easy for Beginners !
 
 ### INSTALLATION [Termux] :
@@ -88,8 +88,11 @@ Igfreak is a advance Instagram Slick Hacking framework that can bruteforcer , ph
 ```
 
 * Bruteforce 
+
 `python3 igfreak.py --bruteforce -u [username] -pl [passlist]`
+
 * Phishing
+
 `python3 igfreak.py --phish -t [template]`
 
 ```
