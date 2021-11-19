@@ -231,12 +231,12 @@ cli_parser.add_argument('--phish',  # parse path to password list file
 cli_parser.add_argument('--report',  # parse path to password list file
                         '--r',
                         action='store_true',
-                        help='Phish any instagram account'
+                        help='Phish any instagram account')
 cli_parser.add_argument('--help',  # parse path to password list file
                         '-h','-help',action='store_true',
                          help=help 
                         )
-pwd = os.getcwd(
+pwd = os.getcwd()
 
 def phish(template):
 	printInfo("Phisher ")
