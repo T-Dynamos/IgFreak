@@ -233,8 +233,10 @@ cli_parser.add_argument('--report',  # parse path to password list file
                         action='store_true',
                         help='Phish any instagram account')
 cli_parser.add_argument('--help',  # parse path to password list file
-                        '-h','-help',action='store_true',
-                         help=help 
+                        '-h','-help',
+						action='store_true',
+                        
+                        help=help
                         )
 pwd = os.getcwd()
 
@@ -332,8 +334,7 @@ def ExecuteIgFreak():
     elif Parsed.help == True:
     	print(help)
     	exit()
-    elif Parsed.help == False:
-    	pass
+   
 
     elif Parsed.phish == True:
     	check_d()
