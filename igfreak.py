@@ -428,7 +428,7 @@ def signin(password,username):
     'sec-fetch-dest': 'empty',
     'sec-fetch-mode': 'cors',
     'sec-fetch-site': 'same-origin',
-    f'user-agent': usa,
+    f'user-agent': user,
     'x-csrftoken': 'DqBQgbH1p7xEAaettRA0nmApvVJTi1mR',
     'x-ig-app-id': '936619743392459',
     'x-ig-www-claim': '0',
@@ -445,7 +445,7 @@ def signin(password,username):
          ipc = requests.get("https://httpbin.org/ip",proxies=por).json()['origin']
          por2 = {"http": f"http://{ipc}:80", "https": f"https://{ipc}:80"}
 
-         print(f"{B}[{G}>{B}]{W} Using Agent : {G}{usa}")
+         print(f"{B}[{G}>{B}]{W} Using Agent : {G}{user}")
          renew_connection()
          s = get_tor_session()
          ipc = requests.get("https://httpbin.org/ip").json()['origin']
