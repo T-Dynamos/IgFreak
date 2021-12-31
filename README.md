@@ -74,7 +74,7 @@ Igfreak is a advance Instagram Slick Hacking framework that can bruteforcer , ph
 * Clone Project
 
 ```
- git clone https://github.com/T-Dynamos/BaapG-Attack 
+ git clone https://github.com/T-Dynamos/IgFreak
  ```
  
 * Change Project Dir
