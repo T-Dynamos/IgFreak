@@ -105,8 +105,10 @@ instagram      : Instagram simple login page
 instafollowers : Get Instagram accounts by seeking followers
 ```
 * Account Reporting
+
 `python3 igfreak.py --report -u <victim's account> -am <amount>  -id <report-id>'
-these report ids you can use
+
+These report ids you can use
 ```
 Choose the type of report :
 	
