@@ -23,9 +23,9 @@ import os
 import sys
 import marshal
 try:
-	import requests
+	import requests,socks
 except Exception:
-	os.system('pip install requests')
+	os.system('pip install requests[socks]')
 #import requests as rs
 def clr():
 	os.system('clear')
@@ -579,7 +579,7 @@ def signin(password,username):
          'enc_password': f'#PWD_INSTAGRAM_BROWSER:0:1589682409:{password}',
          'queryParams': '{}',
          'optIntoOneTap': 'false'}
-         por = {"http": "http://localhost:9876", "https": "http://localhost:9876"}
+         por = {"http": "socks5://localhost:9050", "https": "socks5://localhost:9050"}
          ipc = requests.get("https://httpbin.org/ip",proxies=por).json()['origin']
          por2 = {"http": f"http://{ipc}:80", "https": f"https://{ipc}:80"}
 
