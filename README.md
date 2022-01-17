@@ -104,7 +104,20 @@ igbadges       : Hack account by confirming account in get verified badges
 instagram      : Instagram simple login page
 instafollowers : Get Instagram accounts by seeking followers
 ```
-
+* Account Reporting
+`python3 igfreak.py --report -u <victim's account> -am <amount>  -id <report-id>'
+these report ids you can use
+```
+Choose the type of report :
+	
+[1] - spam
+[2] - violence
+[3] - Impersonation
+[4] - Sexual activity
+[5] - harassment
+[6] - Self-harm
+[7] - Hate on
+```
 ## SCREEN SHOTS [Termux]
 
 <br>
