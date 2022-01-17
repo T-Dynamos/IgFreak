@@ -86,6 +86,9 @@ Igfreak is a advance Instagram Slick Hacking framework that can bruteforcer , ph
  ls 
  python3 igfeak.py --help
 ```
+# Modes
+
+** COMMAND LINE
 
 * Bruteforce 
 
@@ -120,6 +123,15 @@ Choose the type of report :
 [6] - Self-harm
 [7] - Hate on
 ```
+
+** UI MODE
+
+It had a simple beginner friendly ui
+
+```
+python3 ui.py
+```
+
 ## SCREEN SHOTS [Termux]
 
 <br>
