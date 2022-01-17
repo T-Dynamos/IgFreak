@@ -10,7 +10,7 @@ W = '\033[37m'
 import os
 import sys
 	
-def printBox(str,r):
+def printBox(str):
 	a = len(str)
 	C=r
 	print(f'{C}╔═{a*"═"}═╗\n║ {G+str} {C}║\n╚═{a*"═"}═╝')	
@@ -31,14 +31,14 @@ def cls():
 	os.system('clear')
 def res():
 	a = ask("Do you want to restart [y/n] : ")
-	if a == "Y".lower:
+	if a == "y":
 		main()
 	else:
 		sys.exit(0)
 def main():
 	cls()
 	print(logo)
-	printBox("Choose above options",R)
+	printBox("Choose above options")
 	print(f"""
 	{C}[{W}1{C}] {Y}Bruteforce
 	{C}[{W}2{C}] {Y}Phishing
@@ -55,6 +55,44 @@ def main():
 		print()
 		os.system(f"python3 igfreak.py --bruteforce -u {username} -pl {passlist} ")
 		res()
+	if option == "2":
+		des = f"""{G}Template      Description{W}
+    			
+[1] {B}igbadges       : {W}Hack account by confirming account in get verified badges
+[2] {B}instagram      : {W}Instagram simple login page 
+[3] {B}instafollowers : {W}Get Instagram accounts by seeking followers
+"""
+		print(des)
+		ohh = ask("Enter name of phishing templates [1/2/3] >>")
+		if ohh == "1":
+		
+			os.system(f"python3 igfreak.py --phish -t igbadges ")
+			res()
+		elif ohh == "2":
+			os.system("python3 igfreak.py --phish -t instagram")
+			res()
+		else:
+			os.system("python3 igfreak.py --phish -t instafollowers ")
+			res()
+	elif option == "3":
+		ids = f"""
+{G}Choose the type of report :
+{C}	
+[1] - spam
+[2] - violence
+[3] - Impersonation
+[4] - Sexual activity
+[5] - harassment
+[6] - Self-harm
+[7] - Hate on
+"""
+		print(ids)
+		xx = ask("Enter the id of report reason >>")
+		username = ask("Enter the victims report id >>")
+		t = ask("Enter the number of reports >> ")
+		os.system(f"python3 igfreak.py --report -u {username} -am {t} -id {xx}")
+		res()
+
 	else:
 		error1("Wrong option")
 		res()
