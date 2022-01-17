@@ -37,7 +37,7 @@
 
 ### ABOUT TOOL :
 
-Igfreak is a advance Instagram Slick Hacking framework that can bruteforcer , phish and send 50 reports to any account 
+Igfreak is a advance Instagram Slick Hacking framework that can bruteforcer , phish and send  reports to any account 
 
 
 ### AVAILABLE ON :
