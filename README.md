@@ -137,10 +137,14 @@ python3 ui.py
 <br>
 <p align="center">
 <img width="50%" src="https://github.com/T-Dynamos/T-Dynamos/raw/main/bin/Screenshot_2021-11-07-20-14-09-897_com.termux.jpg"/>
-<img width="45%" src="https://github.com/T-Dynamos/T-Dynamos/raw/main/images/Screenshot_2022-01-17-09-43-30-871_com.termux.jpg"/>
+<img width="50%" src="https://github.com/T-Dynamos/T-Dynamos/raw/main/images/Screenshot_2022-01-17-09-43-30-871_com.termux.jpg"/>
 </p>
 
 
+<br>
+<p align="center">
+<img width="50%" src="https://github.com/T-Dynamos/T-Dynamos/raw/main/images/Screenshot_2022-01-11-12-07-14-510_com.anydesk.anydeskandroid.jpg"/>
+</p>
 ## WARNING : 
 ***This tool is only for educational purpose. If you use this tool for other purposes except education we will not be responsible in such cases.***
 ## Contact Me
