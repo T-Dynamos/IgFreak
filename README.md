@@ -150,4 +150,4 @@ python3 ui.py
 ## WARNING : 
 ***This tool is only for educational purpose. If you use this tool for other purposes except education we will not be responsible in such cases.***
 ## Contact Me
-wa.me/918556801792
+t.me/ProgrammerAnsh
