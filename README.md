@@ -149,5 +149,11 @@ python3 ui.py
 
 ## WARNING : 
 ***This tool is only for educational purpose. If you use this tool for other purposes except education we will not be responsible in such cases.***
+
 ## Contact Me
 t.me/ProgrammerAnsh
+## Dontaions
+
+If You really like my work you should consider donating to me to made me buy [Raspberry Pi 400](https://www.electronicscomp.com/raspberry-pi-400-personal-keyboard-computer-kit)
+
+* UPI ID : anshdadwal@apl
