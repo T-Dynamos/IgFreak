@@ -43,6 +43,7 @@ def main():
 	{C}[{W}1{C}] {Y}Bruteforce
 	{C}[{W}2{C}] {Y}Phishing
 	{C}[{W}3{C}] {Y}Report\n
+	{C}[{W}%{C}] {G}Change Report Account
 	{C}[{W}>{C}] {G}Update Tool
 	{C}[{W}*{C}] {G}Donate
 	{C}[{W}${C}] {G}Report Bugs
@@ -96,7 +97,17 @@ def main():
 		t = ask("Enter the number of reports >> ")
 		os.system(f"python3 igfreak.py --report -u {username} -am {t} -id {xx}")
 		res()
-
+	elif option == "%":
+		account = ask("Enter the reporting account >>>")
+		passw = ask("Enter the reporting password >>>")
+		text = f"""
+igfreak_report_account = "{account}" 
+igfreak_report_account_pass = '{passw}' 
+"""
+		filo = open(".igfreak.conf","w")
+		filo.writelines(text)
+		filo.close()
+		res()
 	else:
 		error1("Wrong option")
 		res()
