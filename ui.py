@@ -75,16 +75,20 @@ def main():
 			os.system("python3 igfreak.py --phish -t instafollowers ")
 			res()
 	elif option == "3":
+		os.system('clear')
+		print(logo)
 		ids = f"""
 {G}Choose the type of report :
 {C}	
-[1] - spam
-[2] - violence
+
+[1] - Spam
+[2] - Violence
 [3] - Impersonation
 [4] - Sexual activity
-[5] - harassment
+[5] - Harassment
 [6] - Self-harm
 [7] - Hate on
+
 """
 		print(ids)
 		xx = ask("Enter the id of report reason >>")

