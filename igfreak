@@ -1,0 +1,2 @@
+#!/usr/bin/sh
+env python3 ui.py 
