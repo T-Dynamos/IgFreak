@@ -42,7 +42,8 @@ def main():
 	print(f"""
 	{C}[{W}1{C}] {Y}Bruteforce
 	{C}[{W}2{C}] {Y}Phishing
-	{C}[{W}3{C}] {Y}Report\n
+	{C}[{W}3{C}] {Y}Report
+	{C}[{W}4{C}] {Y}Account Hidden info\n
 	{C}[{W}%{C}] {G}Change Report Account
 	{C}[{W}>{C}] {G}Update Tool
 	{C}[{W}*{C}] {G}Donate
@@ -103,8 +104,8 @@ def main():
 		account = ask("Enter the reporting account >>>")
 		passw = ask("Enter the reporting password >>>")
 		text = f"""
-igfreak_report_account = "{account}" 
-igfreak_report_account_pass = '{passw}' 
+igfreak_report_account = {account} 
+igfreak_report_account_pass = {passw}
 """
 		filo = open(".igfreak.conf","w")
 		filo.writelines(text)
