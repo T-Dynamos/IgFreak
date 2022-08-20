@@ -523,7 +523,6 @@ def ExecuteIgFreak():
 
 
     elif Parsed.phish == True:
-        check_d()
         if Parsed.template is not None:
             if Parsed.template == "instafollowers" or Parsed.template == "instagram" or Parsed.template == "igbadges":
                 phish(Parsed.template)
