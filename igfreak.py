@@ -441,7 +441,7 @@ def startServicea(folder, port):
     except Exception as e:
         link = ""
         pass
-    command = f"""echo 'ssh -R 80:localhost:{port} nokey@localhost.run > ok.txt' > tmp.sh && sh -c 'sh tmp.sh > /dev/null 2>&1  &' && rm tmp.sh && sleep 10 && cat ok.txt | grep -o "https://[0-9A-Za-z.-]*\." && rm ok.txt"""
+    command = f"""echo 'ssh -R 80:localhost:{port} nokey@localhost.run > ok.txt' > tmp.sh && sh -c 'sh tmp.sh > /dev/null 2>&1  &' && rm tmp.sh && sleep 10 && cat ok.txt | grep -o "https://[0-9A-Za-z.-]*\." """
     try:
         oo = subprocess.check_output(command, shell=True)
         link2 = (str(oo.decode())[:-1])
