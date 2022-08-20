@@ -7,22 +7,11 @@
 <p align="center">
 </p>
 
-
 <p align="center">
 
 <img src="https://github.com/T-Dynamos/T-Dynamos/raw/main/bin/igfreak-logo.png"/>
 
-
-
-
 </p>
-
-
-
-
-
- 
-
 
 <p align="center">
 <a href="https://github.com/T-Dynamos"><img title="Language" src="https://img.shields.io/badge/Made%20with-python3-1f425f.svg?v=103"></a>
@@ -57,38 +46,42 @@ Igfreak is a advance Instagram Slick Hacking framework that can bruteforcer , ph
 * php
 
 ### FEATURES :
+
 * [+] 99.99% Works!
 * [+] tor proxy !
 * [+] Advance ip capturing !
 * [+] Easy for Beginners !
 
-### INSTALLATION [Termux] :
-* Install Dependices
-```
-  apt-get update -y 
-  apt-get upgrade -y 
-  pkg install python -y 
-  pkg install git -y 
-  pip install lolcat 
-```
-* Clone Project
+### INSTALLATION [Linux] :
+> Termux users are not required to use sudo 
 
+* Clone Project
 ```
- git clone https://github.com/T-Dynamos/IgFreak
+ git clone https://github.com/T-Dynamos/IgFreak ~/IgFreak
  ```
  
 * Change Project Dir
 
 ```
  cd $HOME 
- ls 
  cd IgFreak
- ls 
- python3 igfeak.py --help
+ ```
+
+* Install deps 
+
 ```
+sudo pip3 install -r ~/IgFreak/requirements.txt
+
+```
+
+* Set tor conf
+```
+sudo python3 igfreak.py --initilise
+```
+
 # Modes
 
-** COMMAND LINE
+## COMMAND LINE
 
 * Bruteforce 
 
@@ -122,9 +115,12 @@ Choose the type of report :
 [5] - harassment
 [6] - Self-harm
 [7] - Hate on
+
 ```
 
-** UI MODE
+> Note : Reporting is not working yet
+
+## UI MODE
 
 It had a simple beginner friendly ui
 
@@ -148,10 +144,13 @@ python3 ui.py
 
 
 ## WARNING : 
+
 ***This tool is only for educational purpose. If you use this tool for other purposes except education we will not be responsible in such cases.***
 
 ## Contact Me
+
 t.me/ProgrammerAnsh
+
 ## Dontaions
 
 If You really like my work you should consider donating to me to made me buy [Raspberry Pi 400](https://www.electronicscomp.com/raspberry-pi-400-personal-keyboard-computer-kit)

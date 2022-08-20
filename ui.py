@@ -20,7 +20,7 @@ def error(error_str):
 def error1(error_str):
         print(f"{B}[{Y}Error{B}] {R+error_str} ")
 def ask(str):
-        a = input(f"{B}[{R}  ?  {B}]{C} {str} {G} ")
+        a = input(f"{B}[{R}  ?  {B}]{C} {str} {G} : ")
         return a
 try:
 	import igfreak

