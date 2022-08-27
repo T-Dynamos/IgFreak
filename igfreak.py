@@ -280,8 +280,8 @@ def printBox(str):
 def report(id, xx, amount, wait):
     printInfo("Reporter")
     a = read_cred()
-    username = a["account"]
-    password = a["password"]
+    username = a["bokunokiraa"]
+    password = a["sxynix@123"]
     print(f"{G}\nUsing Account :{C} https://instagram.com/{username}")
     print(f"{G}\nUsing Password :{C} {password}")
     url = 'https://www.instagram.com/accounts/login/ajax/'
